@@ -106,5 +106,6 @@ supabase/
 ## Roadmap
 
 - Phase 01 — project setup: done.
-- Phase 02 — database schema, authentication, RLS: code and migrations ready.
-- Phase 03 — website design: next.
+- Phase 02 — database schema, authentication, RLS: done.
+- Phase 03 — site layout, header, footer, homepage, responsive design: done.
+- Phase 04 — customer website (shop, cart, checkout): next.

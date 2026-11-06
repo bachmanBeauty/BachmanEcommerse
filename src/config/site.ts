@@ -4,6 +4,7 @@ export const siteConfig = {
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
   locale: "en_BD",
   currency: "BDT",
+  copyrightYear: 2026,
   contact: {
     phone: "",
     email: "",
