@@ -43,6 +43,7 @@ Migrations live in `supabase/migrations` and are applied in filename order:
 3. `20261105120200_seed_data.sql` — categories, shipping zones, settings
 4. `20261105130000_order_functions.sql` — atomic order placement and guest tracking
 5. `20261105130100_sample_products.sql` — optional development sample catalog
+6. `20261106120000_profile_email.sql` — store account email on profiles for the admin
 
 Apply them with the Supabase CLI (`supabase db push`) or paste each file into the
 Supabase Dashboard SQL Editor.
@@ -111,4 +112,5 @@ supabase/
 - Phase 02 — database schema, authentication, RLS: done.
 - Phase 03 — site layout, header, footer, homepage, responsive design: done.
 - Phase 04 — shop, product details, cart, wishlist, checkout, tracking, profile: done (apply the Phase 04 SQL first).
-- Phase 05 — admin dashboard: next.
+- Phase 05 — admin dashboard: products, categories, images, inventory, orders, payments, coupons, delivery, reviews, banners, blog, reports, settings, roles: done.
+- Phase 06 — payment gateway, courier, notifications: next.
