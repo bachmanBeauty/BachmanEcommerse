@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { useStore } from "@/components/store/store-provider";
 
 const navigation = [
   { href: "/", label: "Home" },
@@ -13,11 +12,8 @@ const navigation = [
 ];
 
 export function SiteHeader() {
-  const pathname = usePathname();
   const [open, setOpen] = useState(false);
-
-  const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+  const { cartCount, hydrated } = useStore();
 
   return (
     <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/90 backdrop-blur">
@@ -40,10 +36,7 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className={cn(
-                "text-sm text-neutral-600 transition-colors hover:text-neutral-900",
-                isActive(item.href) && "font-medium text-rose-600",
-              )}
+              className="text-sm text-neutral-600 transition-colors hover:text-neutral-900"
             >
               {item.label}
             </Link>
@@ -91,8 +84,8 @@ export function SiteHeader() {
                 d="M6 7.5h12l-1 12H7l-1-12Zm3 0V6a3 3 0 0 1 6 0v1.5"
               />
             </svg>
-            <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-rose-600 text-[10px] font-semibold text-white">
-              0
+            <span className="absolute -right-0.5 -top-0.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-rose-600 px-1 text-[10px] font-semibold text-white">
+              {hydrated ? cartCount : 0}
             </span>
           </Link>
 
@@ -143,10 +136,7 @@ export function SiteHeader() {
                 key={item.href}
                 href={item.href}
                 onClick={() => setOpen(false)}
-                className={cn(
-                  "border-b border-neutral-100 py-3 text-sm text-neutral-700 last:border-0",
-                  isActive(item.href) && "font-medium text-rose-600",
-                )}
+                className="border-b border-neutral-100 py-3 text-sm text-neutral-700 last:border-0"
               >
                 {item.label}
               </Link>
@@ -157,6 +147,13 @@ export function SiteHeader() {
               className="py-3 text-sm text-neutral-700"
             >
               My account
+            </Link>
+            <Link
+              href="/wishlist"
+              onClick={() => setOpen(false)}
+              className="py-3 text-sm text-neutral-700"
+            >
+              Wishlist
             </Link>
           </div>
         </nav>
