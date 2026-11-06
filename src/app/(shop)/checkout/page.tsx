@@ -26,10 +26,10 @@ export default function CheckoutPage() {
 }
 
 async function CheckoutContent() {
-  const [zones, user] = await Promise.all([
-    getShippingZones(),
-    getCurrentUser(),
-  ]);
+  // Access request-time data first so the catalog fetch never runs during
+  // prerendering (it needs Supabase env vars that only exist at runtime).
+  const user = await getCurrentUser();
+  const zones = await getShippingZones();
 
   let fullName = "";
   let phone = "";
