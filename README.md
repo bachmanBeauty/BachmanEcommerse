@@ -29,32 +29,69 @@ cp .env.example .env.local
 
 | Variable | Scope | Description |
 | --- | --- | --- |
-| `NEXT_PUBLIC_SITE_URL` | public | Base URL used for metadata and absolute links |
+| `NEXT_PUBLIC_SITE_URL` | public | Base URL used for metadata and auth redirects |
 | `NEXT_PUBLIC_SUPABASE_URL` | public | Supabase project URL |
-| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | public | Supabase anon/public key |
+| `NEXT_PUBLIC_SUPABASE_ANON_KEY` | public | Supabase anon/publishable key |
 | `SUPABASE_SERVICE_ROLE_KEY` | server only | Service role key; never expose to the browser |
+
+## Database
+
+Migrations live in `supabase/migrations` and are applied in filename order:
+
+1. `20261105120000_initial_schema.sql` — enums, tables, indexes, triggers
+2. `20261105120100_rls_policies.sql` — RLS policies and storage buckets
+3. `20261105120200_seed_data.sql` — categories, shipping zones, settings
+
+Apply them with the Supabase CLI (`supabase db push`) or paste each file into the
+Supabase Dashboard SQL Editor.
+
+### Make a user an admin
+
+After the user signs up, run:
+
+```sql
+insert into public.user_roles (user_id, role)
+values ('<auth-user-uuid>', 'admin')
+on conflict (user_id) do update set role = 'admin';
+```
+
+The UUID is under **Authentication → Users** in the Supabase Dashboard.
+
+### Auth redirect URLs
+
+In **Authentication → URL Configuration**, set:
+
+- Site URL: `http://localhost:3000` (later the production domain)
+- Redirect URLs: `http://localhost:3000/auth/callback`
 
 ## Project structure
 
 ```text
 src/
   app/                 # Routes (App Router)
+    (auth)/            # Login, register, password reset
     (shop)/            # Customer-facing pages
-    (auth)/            # Login / register / password reset
-    admin/             # Admin dashboard
+    admin/             # Admin dashboard (admin-only)
+    auth/callback/     # Supabase auth code exchange
+    account/           # Customer account (signed-in)
     api/               # Route handlers and webhooks
   components/
     ui/                # Reusable UI primitives
     layout/            # Header, footer, navigation
     shop/              # Storefront components
     admin/             # Admin dashboard components
+    auth/              # Auth forms
   lib/
-    supabase/          # Browser and server Supabase clients
+    supabase/          # Browser, server and proxy clients
+    auth.ts            # Session and role helpers
+    redirects.ts       # Safe post-login redirects
     utils.ts           # Shared helpers (cn)
   config/
     site.ts            # Site metadata and constants
   types/               # Shared TypeScript types
   actions/             # Server actions
+supabase/
+  migrations/          # Versioned SQL migrations
 ```
 
 ## Scripts
@@ -68,6 +105,6 @@ src/
 
 ## Roadmap
 
-Phase 01 (current) — project setup complete: Next.js, TypeScript, Tailwind, Supabase clients, GitHub connection.
-
-Next: Phase 02 — database schema, tables and relationships, authentication, RLS.
+- Phase 01 — project setup: done.
+- Phase 02 — database schema, authentication, RLS: code and migrations ready.
+- Phase 03 — website design: next.
