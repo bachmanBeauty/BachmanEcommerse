@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Suspense } from "react";
 import {
+  sendToCourier,
   updateOrderNote,
   updateOrderStatus,
   updatePaymentStatus,
@@ -10,6 +11,7 @@ import {
 import { AdminLoading } from "@/components/admin/loading";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { isSteadfastEnabled } from "@/lib/courier/steadfast";
 import { formatDate, formatPrice } from "@/lib/format";
 import { createClient } from "@/lib/supabase/server";
 
@@ -51,6 +53,8 @@ async function OrderContent({ params }: OrderPageProps) {
     .maybeSingle();
 
   if (!order) notFound();
+
+  const courierEnabled = isSteadfastEnabled();
 
   const [{ data: items }, { data: history }] = await Promise.all([
     supabase.from("order_items").select("*").eq("order_id", id),
@@ -249,6 +253,55 @@ async function OrderContent({ params }: OrderPageProps) {
               Save note
             </Button>
           </form>
+
+          <section className="rounded-xl border border-neutral-200 bg-white p-5">
+            <h2 className="text-sm font-semibold">Courier</h2>
+            {order.courier_name ? (
+              <dl className="mt-3 space-y-1 text-xs">
+                <div className="flex justify-between gap-3">
+                  <dt className="text-neutral-500">Courier</dt>
+                  <dd className="text-neutral-900">{order.courier_name}</dd>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <dt className="text-neutral-500">Tracking</dt>
+                  <dd className="font-mono text-neutral-900">
+                    {order.courier_tracking_code ??
+                      order.courier_consignment_id ??
+                      "—"}
+                  </dd>
+                </div>
+                <div className="flex justify-between gap-3">
+                  <dt className="text-neutral-500">Status</dt>
+                  <dd className="capitalize text-neutral-900">
+                    {order.courier_status ?? "—"}
+                  </dd>
+                </div>
+              </dl>
+            ) : (
+              <p className="mt-2 text-xs text-neutral-500">
+                Not sent to a courier yet.
+              </p>
+            )}
+            <form action={sendToCourier} className="mt-3">
+              <input type="hidden" name="order_id" value={order.id} />
+              <Button
+                type="submit"
+                size="sm"
+                variant="outline"
+                className="w-full"
+                disabled={!courierEnabled || Boolean(order.courier_consignment_id)}
+              >
+                {!courierEnabled
+                  ? "Courier not configured"
+                  : order.courier_consignment_id
+                    ? "Already sent"
+                    : "Send to Steadfast"}
+              </Button>
+            </form>
+            <p className="mt-2 text-[11px] text-neutral-500">
+              Requires Steadfast API keys in Vercel.
+            </p>
+          </section>
         </aside>
       </div>
     </div>

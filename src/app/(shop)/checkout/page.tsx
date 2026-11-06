@@ -3,6 +3,7 @@ import { Suspense } from "react";
 import { CheckoutForm } from "@/components/shop/checkout-form";
 import { getCurrentUser } from "@/lib/auth";
 import { getShippingZones } from "@/lib/catalog";
+import { isSslcommerzEnabled } from "@/lib/payments/sslcommerz";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
@@ -48,7 +49,11 @@ async function CheckoutContent() {
   }
 
   return (
-    <CheckoutForm zones={zones} defaults={{ fullName, email, phone }} />
+    <CheckoutForm
+      zones={zones}
+      defaults={{ fullName, email, phone }}
+      sslcommerzEnabled={isSslcommerzEnabled()}
+    />
   );
 }
 

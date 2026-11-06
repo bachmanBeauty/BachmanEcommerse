@@ -3,7 +3,9 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
+import { createSteadfastOrder, isSteadfastEnabled } from "@/lib/courier/steadfast";
 import { bool, dateOrNull, numberOrNull, text } from "@/lib/form";
+import { sendOrderEmail, sendOrderSms } from "@/lib/notifications";
 import { slugify } from "@/lib/slug";
 import { createClient } from "@/lib/supabase/server";
 
@@ -31,7 +33,7 @@ export async function updateOrderStatus(formData: FormData) {
   const supabase = await createClient();
   const { data: order, error: fetchError } = await supabase
     .from("orders")
-    .select("status")
+    .select("status, order_number, customer_email, customer_phone")
     .eq("id", id)
     .single();
 
@@ -54,6 +56,23 @@ export async function updateOrderStatus(formData: FormData) {
     note: text(formData, "note") || null,
     changed_by: admin.id,
   });
+
+  if (order.status !== status) {
+    await sendOrderEmail({
+      to: order.customer_email,
+      subject: `Order ${order.order_number} is now ${status}`,
+      heading: `Your order is ${status}`,
+      lines: [
+        `Order number: ${order.order_number}`,
+        `New status: ${status}`,
+        "Thank you for shopping with Bachman Beauty.",
+      ],
+    });
+    await sendOrderSms(
+      order.customer_phone,
+      `Bachman Beauty: order ${order.order_number} status: ${status}.`,
+    );
+  }
 
   const closing = status === "cancelled" || status === "returned";
   const wasClosed = order.status === "cancelled" || order.status === "returned";
@@ -402,8 +421,7 @@ export async function updateSettings(formData: FormData) {
   revalidatePath("/", "layout");
 }
 
-export async function setUserRole(formData: FormData) {
-  const admin = await requireAdmin();
+export async function setUserRole(formData: FormData) {  const admin = await requireAdmin();
   const userId = text(formData, "user_id");
   const role = text(formData, "role");
 
@@ -423,4 +441,69 @@ export async function setUserRole(formData: FormData) {
   if (error) throw new Error(error.message);
   revalidatePath("/admin/roles");
   revalidatePath("/admin/customers");
+}
+
+export async function sendToCourier(formData: FormData) {
+  await requireAdmin();
+
+  if (!isSteadfastEnabled()) {
+    throw new Error(
+      "Courier is not configured. Add STEADFAST_API_KEY and STEADFAST_SECRET_KEY.",
+    );
+  }
+
+  const id = text(formData, "order_id");
+  const supabase = await createClient();
+  const { data: order } = await supabase
+    .from("orders")
+    .select("*")
+    .eq("id", id)
+    .maybeSingle();
+
+  if (!order) throw new Error("Order not found.");
+  if (order.courier_consignment_id) {
+    throw new Error("This order was already sent to the courier.");
+  }
+
+  const consignment = await createSteadfastOrder({
+    invoice: order.order_number,
+    recipient_name: order.customer_name,
+    recipient_phone: order.customer_phone,
+    recipient_address: [
+      order.shipping_address,
+      order.shipping_area,
+      order.shipping_city,
+      order.shipping_district,
+      order.shipping_postal_code,
+    ]
+      .filter(Boolean)
+      .join(", "),
+    cod_amount: Number(order.total),
+    note: order.customer_note ?? "",
+  });
+
+  const { error } = await supabase
+    .from("orders")
+    .update({
+      courier_name: "Steadfast",
+      courier_consignment_id: String(consignment.consignment_id ?? ""),
+      courier_tracking_code: consignment.tracking_code ?? null,
+      courier_status: consignment.status ?? "in_review",
+      courier_sent_at: new Date().toISOString(),
+    })
+    .eq("id", id);
+
+  if (error) throw new Error(error.message);
+
+  await supabase.from("order_status_history").insert({
+    order_id: id,
+    status: order.status,
+    note: `Sent to Steadfast (${
+      consignment.tracking_code ?? consignment.consignment_id ?? "pending"
+    })`,
+    changed_by: null,
+  });
+
+  revalidatePath(`/admin/orders/${id}`);
+  revalidatePath("/admin/orders");
 }

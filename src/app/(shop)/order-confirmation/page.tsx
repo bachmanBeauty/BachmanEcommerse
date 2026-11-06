@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 type ConfirmationProps = {
-  searchParams: Promise<{ number?: string }>;
+  searchParams: Promise<{ number?: string; payment?: string }>;
 };
 
 export default function OrderConfirmationPage({
@@ -27,7 +27,8 @@ export default function OrderConfirmationPage({
 }
 
 async function Confirmation({ searchParams }: ConfirmationProps) {
-  const { number } = await searchParams;
+  const { number, payment } = await searchParams;
+  const failed = payment === "failed" || payment === "cancelled";
   const cookieStore = await cookies();
   const raw = cookieStore.get("bb_last_order")?.value;
 
@@ -48,24 +49,31 @@ async function Confirmation({ searchParams }: ConfirmationProps) {
       <ClearCartOnMount />
 
       <div className="text-center">
-        <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="h-7 w-7"
-            aria-hidden="true"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" d="m5 13 4 4L19 7" />
-          </svg>
-        </span>
+        {failed ? (
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-amber-50 text-2xl font-semibold text-amber-600">
+            !
+          </span>
+        ) : (
+          <span className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-50 text-emerald-600">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              className="h-7 w-7"
+              aria-hidden="true"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="m5 13 4 4L19 7" />
+            </svg>
+          </span>
+        )}
         <h1 className="mt-5 font-serif text-4xl tracking-tight text-neutral-900">
-          Thank you for your order
+          {failed ? "Payment not completed" : "Thank you for your order"}
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-neutral-600">
-          We have received your order and will call you shortly to confirm the
-          delivery details.
+          {failed
+            ? "Your order is saved but still marked unpaid. Contact us to complete the payment or request cash on delivery."
+            : "We have received your order and will call you shortly to confirm the delivery details."}
         </p>
       </div>
 

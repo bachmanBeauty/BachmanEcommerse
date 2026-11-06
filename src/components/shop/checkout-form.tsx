@@ -13,9 +13,14 @@ import { formatPrice } from "@/lib/format";
 type CheckoutFormProps = {
   zones: ShippingZone[];
   defaults: { fullName: string; email: string; phone: string };
+  sslcommerzEnabled: boolean;
 };
 
-export function CheckoutForm({ zones, defaults }: CheckoutFormProps) {
+export function CheckoutForm({
+  zones,
+  defaults,
+  sslcommerzEnabled,
+}: CheckoutFormProps) {
   const { cart, subtotal, hydrated } = useStore();
   const [state, formAction, pending] = useActionState<CheckoutState, FormData>(
     placeOrder,
@@ -205,9 +210,29 @@ export function CheckoutForm({ zones, defaults }: CheckoutFormProps) {
               </span>
             </span>
           </label>
-          <p className="mt-3 text-xs text-neutral-500">
-            Online payment (bKash, Nagad, card) is coming soon.
-          </p>
+
+          {sslcommerzEnabled ? (
+            <label className="mt-3 flex items-start gap-3 rounded-xl border border-neutral-300 p-4">
+              <input
+                type="radio"
+                name="paymentMethod"
+                value="sslcommerz"
+                className="mt-1 h-4 w-4 accent-neutral-900"
+              />
+              <span>
+                <span className="block text-sm font-medium text-neutral-900">
+                  Pay online — bKash, Nagad or card
+                </span>
+                <span className="mt-0.5 block text-xs text-neutral-500">
+                  Secure payment via SSLCommerz.
+                </span>
+              </span>
+            </label>
+          ) : (
+            <p className="mt-3 text-xs text-neutral-500">
+              Online payment is coming soon.
+            </p>
+          )}
         </section>
 
         <section className="rounded-2xl border border-neutral-200 bg-white p-6">

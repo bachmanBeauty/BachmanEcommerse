@@ -3,6 +3,11 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
+import { sendOrderEmail, sendOrderSms } from "@/lib/notifications";
+import {
+  createSslcommerzSession,
+  isSslcommerzEnabled,
+} from "@/lib/payments/sslcommerz";
 import { createClient } from "@/lib/supabase/server";
 import type { TrackedOrder } from "@/types/catalog";
 
@@ -24,7 +29,7 @@ const checkoutSchema = z.object({
   shippingDistrict: z.string().trim().optional(),
   shippingPostalCode: z.string().trim().optional(),
   shippingZoneId: z.string().uuid("Please choose a delivery area."),
-  paymentMethod: z.enum(["cod"]),
+  paymentMethod: z.enum(["cod", "sslcommerz"]),
   note: z.string().trim().max(500).optional(),
 });
 
@@ -51,7 +56,7 @@ export async function placeOrder(
     shippingDistrict: String(formData.get("shippingDistrict") ?? ""),
     shippingPostalCode: String(formData.get("shippingPostalCode") ?? ""),
     shippingZoneId: String(formData.get("shippingZoneId") ?? ""),
-    paymentMethod: "cod",
+    paymentMethod: String(formData.get("paymentMethod") ?? "cod"),
     note: String(formData.get("note") ?? ""),
   });
 
@@ -96,6 +101,21 @@ export async function placeOrder(
     return { error: "Could not create the order. Please try again." };
   }
 
+  await sendOrderEmail({
+    to: parsed.data.customerEmail || null,
+    subject: `Order ${order.order_number} received`,
+    heading: "Thank you for your order",
+    lines: [
+      `Order number: ${order.order_number}`,
+      `Total: BDT ${order.total ?? 0}`,
+      "We will contact you shortly to confirm the delivery details.",
+    ],
+  });
+  await sendOrderSms(
+    parsed.data.customerPhone,
+    `Bachman Beauty: order ${order.order_number} received. Total BDT ${order.total ?? 0}.`,
+  );
+
   const cookieStore = await cookies();
   cookieStore.set(
     "bb_last_order",
@@ -112,8 +132,36 @@ export async function placeOrder(
     },
   );
 
+  if (parsed.data.paymentMethod === "sslcommerz") {
+    if (!isSslcommerzEnabled()) {
+      return { error: "Online payment is not available right now." };
+    }
+
+    let gatewayUrl: string;
+    try {
+      gatewayUrl = await createSslcommerzSession({
+        order_number: order.order_number,
+        total: Number(order.total ?? 0),
+        customer_name: parsed.data.customerName,
+        customer_phone: parsed.data.customerPhone,
+        customer_email: parsed.data.customerEmail || null,
+        shipping_address: parsed.data.shippingAddress,
+        shipping_city: parsed.data.shippingCity,
+      });
+    } catch (error) {
+      return {
+        error:
+          error instanceof Error
+            ? error.message
+            : "Could not start online payment.",
+      };
+    }
+
+    redirect(gatewayUrl);
+  }
+
   redirect(
-    `/order-confirmation?number=${encodeURIComponent(order.order_number)}`,
+    `/order-confirmation?number=${encodeURIComponent(order.order_number)}&payment=cod`,
   );
 }
 
