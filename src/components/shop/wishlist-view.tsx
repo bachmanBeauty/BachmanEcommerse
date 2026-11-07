@@ -24,15 +24,15 @@ export function WishlistView() {
 
   if (wishlist.length === 0) {
     return (
-      <div className="mt-10 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 px-6 py-16 text-center">
+      <div className="mt-10 rounded-2xl border border-dashed border-neutral-300 bg-white px-6 py-16 text-center">
         <h2 className="font-serif text-2xl text-neutral-900">
-          Nothing saved yet
+          এখনো কিছু সেভ করা হয়নি
         </h2>
         <p className="mx-auto mt-2 max-w-sm text-sm text-neutral-600">
-          Tap the heart on any product to keep it here for later.
+          যেকোনো প্রোডাক্টে হার্ট চাপুন — পরে কেনার জন্য এখানে থাকবে।
         </p>
         <div className="mt-6 flex justify-center">
-          <ButtonLink href="/shop">Browse the shop</ButtonLink>
+          <ButtonLink href="/shop">শপ দেখুন</ButtonLink>
         </div>
       </div>
     );
@@ -64,7 +64,7 @@ export function WishlistView() {
             <button
               type="button"
               onClick={() => toggleWishlist(item)}
-              aria-label={`Remove ${item.name} from wishlist`}
+              aria-label={`${item.name} উইশলিস্ট থেকে সরান`}
               className="absolute right-3 top-3 rounded-full bg-white/90 p-2 text-rose-600 shadow-sm backdrop-blur"
             >
               <svg

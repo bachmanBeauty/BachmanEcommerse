@@ -14,16 +14,16 @@ export async function updateProfile(
   const user = await getCurrentUser();
 
   if (!user) {
-    return { error: "Please sign in again." };
+    return { error: "আবার সাইন ইন করুন।" };
   }
 
   const parsed = z
     .object({
-      fullName: z.string().trim().min(2, "Please enter your name."),
+      fullName: z.string().trim().min(2, "আপনার নাম লিখুন।"),
       phone: z
         .string()
         .trim()
-        .min(6, "Please enter a valid phone number.")
+        .min(6, "সঠিক ফোন নম্বর দিন।")
         .optional()
         .or(z.literal("")),
     })
@@ -33,7 +33,7 @@ export async function updateProfile(
     });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Please check the form." };
+    return { error: parsed.error.issues[0]?.message ?? "ফর্মটি আবার দেখুন।" };
   }
 
   const supabase = await createClient();
@@ -46,9 +46,9 @@ export async function updateProfile(
     .eq("id", user.id);
 
   if (error) {
-    return { error: error.message };
+    return { error: "প্রোফাইল সংরক্ষণ করা যায়নি। আবার চেষ্টা করুন।" };
   }
 
   revalidatePath("/account");
-  return { success: "Profile updated." };
+  return { success: "প্রোফাইল আপডেট হয়েছে।" };
 }

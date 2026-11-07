@@ -12,15 +12,34 @@ export type AuthState = { error?: string; success?: string } | null;
 const emailSchema = z
   .string()
   .trim()
-  .min(1, "Email is required.")
-  .email("Enter a valid email address.");
+  .min(1, "ইমেইল দিন।")
+  .email("সঠিক ইমেইল দিন।");
 
 const passwordSchema = z
   .string()
-  .min(8, "Password must be at least 8 characters.");
+  .min(8, "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।");
 
 function firstIssue(error: z.ZodError) {
-  return error.issues[0]?.message ?? "Please check the form and try again.";
+  return error.issues[0]?.message ?? "ফর্মটি আবার দেখুন।";
+}
+
+function authError(message: string) {
+  if (message.includes("Invalid login credentials")) {
+    return "ইমেইল বা পাসওয়ার্ড ভুল।";
+  }
+  if (message.includes("Email not confirmed")) {
+    return "ইমেইল এখনো নিশ্চিত হয়নি। ইমেইলের লিংকে ক্লিক করুন।";
+  }
+  if (message.includes("already registered")) {
+    return "এই ইমেইলে আগেই অ্যাকাউন্ট আছে।";
+  }
+  if (message.includes("Password should be")) {
+    return "পাসওয়ার্ড কমপক্ষে ৮ অক্ষরের হতে হবে।";
+  }
+  if (message.includes("rate limit")) {
+    return "অনেকবার চেষ্টা হয়েছে। কিছুক্ষণ পর আবার চেষ্টা করুন।";
+  }
+  return "কিছু একটা ভুল হয়েছে। আবার চেষ্টা করুন।";
 }
 
 export async function signIn(
@@ -30,7 +49,7 @@ export async function signIn(
   const parsed = z
     .object({
       email: emailSchema,
-      password: z.string().min(1, "Password is required."),
+      password: z.string().min(1, "পাসওয়ার্ড দিন।"),
     })
     .safeParse({
       email: String(formData.get("email") ?? ""),
@@ -45,7 +64,7 @@ export async function signIn(
   const { error } = await supabase.auth.signInWithPassword(parsed.data);
 
   if (error) {
-    return { error: error.message };
+    return { error: authError(error.message) };
   }
 
   revalidatePath("/", "layout");
@@ -58,7 +77,7 @@ export async function signUp(
 ): Promise<AuthState> {
   const parsed = z
     .object({
-      fullName: z.string().trim().min(2, "Enter your full name."),
+      fullName: z.string().trim().min(2, "পূর্ণ নাম লিখুন।"),
       email: emailSchema,
       password: passwordSchema,
     })
@@ -83,7 +102,7 @@ export async function signUp(
   });
 
   if (error) {
-    return { error: error.message };
+    return { error: authError(error.message) };
   }
 
   if (data.session) {
@@ -93,7 +112,7 @@ export async function signUp(
 
   return {
     success:
-      "Account created. Check your email for the confirmation link, then sign in.",
+      "অ্যাকাউন্ট তৈরি হয়েছে। ইমেইলের নিশ্চিতকরণ লিংকে ক্লিক করুন, তারপর সাইন ইন করুন।",
   };
 }
 
@@ -123,7 +142,7 @@ export async function requestPasswordReset(
 
   return {
     success:
-      "If an account exists for that email, a password reset link is on its way.",
+      "এই ইমেইলে অ্যাকাউন্ট থাকলে পাসওয়ার্ড রিসেট লিংক পাঠানো হয়েছে।",
   };
 }
 
@@ -134,10 +153,10 @@ export async function updatePassword(
   const parsed = z
     .object({
       password: passwordSchema,
-      confirmPassword: z.string().min(1, "Confirm your password."),
+      confirmPassword: z.string().min(1, "পাসওয়ার্ড নিশ্চিত করুন।"),
     })
     .refine((values) => values.password === values.confirmPassword, {
-      message: "Passwords do not match.",
+      message: "পাসওয়ার্ড মিলছে না।",
       path: ["confirmPassword"],
     })
     .safeParse({
@@ -155,7 +174,7 @@ export async function updatePassword(
   });
 
   if (error) {
-    return { error: error.message };
+    return { error: authError(error.message) };
   }
 
   revalidatePath("/", "layout");

@@ -7,7 +7,7 @@ import { ButtonLink } from "@/components/ui/button-link";
 import { formatPrice } from "@/lib/format";
 
 export const metadata: Metadata = {
-  title: "Order confirmed",
+  title: "অর্ডার নিশ্চিত",
 };
 
 type ConfirmationProps = {
@@ -68,19 +68,19 @@ async function Confirmation({ searchParams }: ConfirmationProps) {
           </span>
         )}
         <h1 className="mt-5 font-serif text-4xl tracking-tight text-neutral-900">
-          {failed ? "Payment not completed" : "Thank you for your order"}
+          {failed ? "পেমেন্ট সম্পন্ন হয়নি" : "অর্ডারের জন্য ধন্যবাদ"}
         </h1>
         <p className="mt-3 text-sm leading-relaxed text-neutral-600">
           {failed
-            ? "Your order is saved but still marked unpaid. Contact us to complete the payment or request cash on delivery."
-            : "We have received your order and will call you shortly to confirm the delivery details."}
+            ? "আপনার অর্ডার সেভ হয়েছে, তবে পেমেন্ট এখনো বাকি। পেমেন্ট সম্পন্ন করতে বা ক্যাশ অন ডেলিভারি নিতে আমাদের সাথে যোগাযোগ করুন।"
+            : "আমরা আপনার অর্ডার পেয়েছি। ডেলিভারির বিস্তারিত নিশ্চিত করতে শীঘ্রই ফোন করব।"}
         </p>
       </div>
 
       {number && (
         <div className="mt-8 rounded-2xl border border-neutral-200 bg-white p-6">
           <div className="flex items-center justify-between gap-4">
-            <p className="text-sm text-neutral-500">Order number</p>
+            <p className="text-sm text-neutral-500">অর্ডার নম্বর</p>
             <p className="font-mono text-sm font-semibold text-neutral-900">
               {number}
             </p>
@@ -88,11 +88,11 @@ async function Confirmation({ searchParams }: ConfirmationProps) {
           {matches && summary && (
             <>
               <div className="mt-3 flex items-center justify-between gap-4 border-t border-neutral-100 pt-3">
-                <p className="text-sm text-neutral-500">Items</p>
+                <p className="text-sm text-neutral-500">আইটেম</p>
                 <p className="text-sm text-neutral-900">{summary.itemCount}</p>
               </div>
               <div className="mt-3 flex items-center justify-between gap-4 border-t border-neutral-100 pt-3">
-                <p className="text-sm text-neutral-500">Total</p>
+                <p className="text-sm text-neutral-500">মোট</p>
                 <p className="text-sm font-semibold text-neutral-900">
                   {formatPrice(summary.total ?? 0)}
                 </p>
@@ -103,17 +103,17 @@ async function Confirmation({ searchParams }: ConfirmationProps) {
       )}
 
       <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
-        <ButtonLink href="/track">Track this order</ButtonLink>
+        <ButtonLink href="/track">অর্ডার ট্র্যাক করুন</ButtonLink>
         <ButtonLink href="/shop" variant="outline">
-          Continue shopping
+          কেনাকাটা চালিয়ে যান
         </ButtonLink>
       </div>
 
       <p className="mt-6 text-center text-xs text-neutral-500">
-        Keep your order number safe. You can track it anytime with your phone
-        number. Need help?{" "}
+        অর্ডার নম্বরটি সংরক্ষণ করুন। ফোন নম্বর দিয়ে যেকোনো সময় ট্র্যাক করতে
+        পারবেন। সাহায্য দরকার?{" "}
         <Link href="/contact" className="text-rose-600 hover:text-rose-700">
-          Contact us
+          যোগাযোগ করুন
         </Link>
       </p>
     </>

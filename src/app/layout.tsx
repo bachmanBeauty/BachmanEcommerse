@@ -1,17 +1,26 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display } from "next/font/google";
+import { Baloo_Da_2, Galada, Hind_Siliguri } from "next/font/google";
 import { siteConfig } from "@/config/site";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
+const bangla = Hind_Siliguri({
+  subsets: ["bengali", "latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-bangla",
   display: "swap",
 });
 
-const playfair = Playfair_Display({
-  subsets: ["latin"],
-  variable: "--font-playfair",
+const display = Baloo_Da_2({
+  subsets: ["bengali", "latin"],
+  weight: ["400", "500", "600", "700", "800"],
+  variable: "--font-display",
+  display: "swap",
+});
+
+const script = Galada({
+  subsets: ["bengali", "latin"],
+  weight: "400",
+  variable: "--font-script",
   display: "swap",
 });
 
@@ -26,7 +35,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html
+      lang="bn"
+      className={`${bangla.variable} ${display.variable} ${script.variable}`}
+    >
       <body className="min-h-screen bg-white font-sans text-neutral-900 antialiased">
         {children}
       </body>

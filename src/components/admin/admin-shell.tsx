@@ -10,41 +10,41 @@ type NavItem = { href: string; label: string; icon: IconName };
 
 const groups: { label: string; items: NavItem[] }[] = [
   {
-    label: "Overview",
-    items: [{ href: "/admin", label: "Dashboard", icon: "grid" }],
+    label: "সারসংক্ষেপ",
+    items: [{ href: "/admin", label: "ড্যাশবোর্ড", icon: "grid" }],
   },
   {
-    label: "Catalog",
+    label: "ক্যাটালগ",
     items: [
-      { href: "/admin/products", label: "Products", icon: "box" },
-      { href: "/admin/categories", label: "Categories", icon: "tag" },
-      { href: "/admin/inventory", label: "Inventory", icon: "layers" },
+      { href: "/admin/products", label: "প্রোডাক্ট", icon: "box" },
+      { href: "/admin/categories", label: "ক্যাটাগরি", icon: "tag" },
+      { href: "/admin/inventory", label: "স্টক", icon: "layers" },
     ],
   },
   {
-    label: "Sales",
+    label: "বিক্রি",
     items: [
-      { href: "/admin/orders", label: "Orders", icon: "cart" },
-      { href: "/admin/payments", label: "Payments", icon: "wallet" },
-      { href: "/admin/customers", label: "Customers", icon: "users" },
-      { href: "/admin/coupons", label: "Coupons", icon: "ticket" },
+      { href: "/admin/orders", label: "অর্ডার", icon: "cart" },
+      { href: "/admin/payments", label: "পেমেন্ট", icon: "wallet" },
+      { href: "/admin/customers", label: "কাস্টমার", icon: "users" },
+      { href: "/admin/coupons", label: "কুপন", icon: "ticket" },
     ],
   },
   {
-    label: "Content",
+    label: "কনটেন্ট",
     items: [
-      { href: "/admin/reviews", label: "Reviews", icon: "star" },
-      { href: "/admin/banners", label: "Banners", icon: "image" },
-      { href: "/admin/blog", label: "Blog", icon: "file" },
+      { href: "/admin/reviews", label: "রিভিউ", icon: "star" },
+      { href: "/admin/banners", label: "ব্যানার", icon: "image" },
+      { href: "/admin/blog", label: "ব্লগ", icon: "file" },
     ],
   },
   {
-    label: "Store",
+    label: "স্টোর",
     items: [
-      { href: "/admin/delivery", label: "Delivery", icon: "truck" },
-      { href: "/admin/reports", label: "Reports", icon: "chart" },
-      { href: "/admin/settings", label: "Settings", icon: "settings" },
-      { href: "/admin/roles", label: "Roles", icon: "shield" },
+      { href: "/admin/delivery", label: "ডেলিভারি", icon: "truck" },
+      { href: "/admin/reports", label: "রিপোর্ট", icon: "chart" },
+      { href: "/admin/settings", label: "সেটিংস", icon: "settings" },
+      { href: "/admin/roles", label: "রোল", icon: "shield" },
     ],
   },
 ];
@@ -80,7 +80,7 @@ export function AdminShell({
       {open && (
         <button
           type="button"
-          aria-label="Close menu"
+          aria-label="মেনু বন্ধ করুন"
           onClick={() => setOpen(false)}
           className="fixed inset-0 z-40 bg-neutral-900/30 backdrop-blur-sm lg:hidden"
         />
@@ -106,14 +106,14 @@ export function AdminShell({
                 Bachman Beauty
               </span>
               <span className="block text-[10px] uppercase tracking-[0.2em] text-neutral-400">
-                Admin
+                অ্যাডমিন
               </span>
             </span>
           </Link>
           <button
             type="button"
             onClick={() => setOpen(false)}
-            aria-label="Close menu"
+            aria-label="মেনু বন্ধ করুন"
             className="rounded-lg p-2 text-neutral-500 hover:bg-neutral-100 lg:hidden"
           >
             <Icon name="close" className="h-4 w-4" />
@@ -160,7 +160,7 @@ export function AdminShell({
               </span>
               <div className="min-w-0">
                 <p className="truncate text-xs font-medium text-neutral-900">
-                  Signed in as
+                  সাইন ইন করেছেন
                 </p>
                 <p className="truncate text-[11px] text-neutral-500">{email}</p>
               </div>
@@ -170,14 +170,14 @@ export function AdminShell({
                 href="/"
                 className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-neutral-200 bg-white px-2 py-1.5 text-[11px] font-medium text-neutral-700 hover:bg-neutral-50"
               >
-                <Icon name="external" className="h-3.5 w-3.5" /> Store
+                <Icon name="external" className="h-3.5 w-3.5" /> স্টোর
               </Link>
               <form action={signOutAction} className="flex-1">
                 <button
                   type="submit"
                   className="flex w-full items-center justify-center gap-1.5 rounded-lg bg-neutral-900 px-2 py-1.5 text-[11px] font-medium text-white hover:bg-neutral-800"
                 >
-                  <Icon name="logout" className="h-3.5 w-3.5" /> Sign out
+                  <Icon name="logout" className="h-3.5 w-3.5" /> সাইন আউট
                 </button>
               </form>
             </div>
@@ -191,17 +191,17 @@ export function AdminShell({
             <button
               type="button"
               onClick={() => setOpen(true)}
-              aria-label="Open menu"
+              aria-label="মেনু খুলুন"
               className="rounded-lg p-2 text-neutral-700 hover:bg-neutral-100 lg:hidden"
             >
               <Icon name="menu" />
             </button>
             <div>
               <p className="text-[10px] uppercase tracking-[0.18em] text-neutral-400">
-                Admin
+                অ্যাডমিন
               </p>
               <p className="text-sm font-medium text-neutral-900">
-                {activeItem?.label ?? "Dashboard"}
+                {activeItem?.label ?? "ড্যাশবোর্ড"}
               </p>
             </div>
           </div>
@@ -210,7 +210,7 @@ export function AdminShell({
               href="/"
               className="hidden items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-xs text-neutral-700 hover:border-neutral-300 sm:flex"
             >
-              <Icon name="external" className="h-3.5 w-3.5" /> View store
+              <Icon name="external" className="h-3.5 w-3.5" /> স্টোর দেখুন
             </Link>
             <span className="flex h-8 w-8 items-center justify-center rounded-full bg-neutral-900 text-[11px] font-semibold text-white">
               {initials}

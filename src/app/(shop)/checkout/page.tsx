@@ -7,17 +7,17 @@ import { isSslcommerzEnabled } from "@/lib/payments/sslcommerz";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "Checkout",
+  title: "চেকআউট",
 };
 
 export default function CheckoutPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-12 sm:py-16">
       <h1 className="font-serif text-4xl tracking-tight text-neutral-900">
-        Checkout
+        চেকআউট
       </h1>
       <p className="mt-2 text-sm text-neutral-600">
-        Cash on delivery available all over Bangladesh.
+        সারা বাংলাদেশে ক্যাশ অন ডেলিভারি।
       </p>
       <Suspense fallback={<CheckoutSkeleton />}>
         <CheckoutContent />

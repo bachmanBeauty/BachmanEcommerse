@@ -2,18 +2,18 @@ import Link from "next/link";
 import { siteConfig } from "@/config/site";
 
 const shopLinks = [
-  { href: "/shop?category=cleanser", label: "Cleanser" },
-  { href: "/shop?category=toner", label: "Toner" },
-  { href: "/shop?category=serum", label: "Serum" },
-  { href: "/shop?category=moisturizer", label: "Moisturizer" },
-  { href: "/shop?category=sunscreen", label: "Sunscreen" },
+  { href: "/shop?category=cleanser", label: "ক্লিনজার" },
+  { href: "/shop?category=toner", label: "টোনার" },
+  { href: "/shop?category=serum", label: "সিরাম" },
+  { href: "/shop?category=moisturizer", label: "ময়েশ্চারাইজার" },
+  { href: "/shop?category=sunscreen", label: "সানস্ক্রিন" },
 ];
 
 const helpLinks = [
-  { href: "/shop", label: "Shop all" },
-  { href: "/about", label: "Our story" },
-  { href: "/contact", label: "Contact us" },
-  { href: "/track", label: "Track your order" },
+  { href: "/shop", label: "সব প্রোডাক্ট" },
+  { href: "/about", label: "আমাদের গল্প" },
+  { href: "/contact", label: "যোগাযোগ করুন" },
+  { href: "/track", label: "অর্ডার ট্র্যাক করুন" },
 ];
 
 export function SiteFooter() {
@@ -22,7 +22,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-16 sm:grid-cols-2 lg:grid-cols-4">
         <div className="lg:pr-6">
           <div className="flex items-center gap-2.5">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white font-serif text-base text-neutral-900">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#fff7ee] font-serif text-base text-neutral-900">
               B
             </span>
             <span className="font-serif text-xl text-white">
@@ -30,8 +30,8 @@ export function SiteFooter() {
             </span>
           </div>
           <p className="mt-4 max-w-xs text-sm leading-relaxed text-neutral-400">
-            Thoughtfully formulated skincare for everyday routines. Honest
-            ingredients, gentle formulas, visible results.
+            প্রতিদিনের রুটিনের জন্য যত্নে তৈরি স্কিনকেয়ার। সৎ উপাদান, কোমল
+            ফর্মুলা, দৃশ্যমান ফলাফল।
           </p>
           <div className="mt-5 flex gap-3">
             <span className="flex h-9 w-9 items-center justify-center rounded-full border border-neutral-800 text-neutral-400">
@@ -51,7 +51,7 @@ export function SiteFooter() {
 
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500">
-            Shop
+            শপ
           </p>
           <ul className="mt-4 space-y-2.5">
             {shopLinks.map((item) => (
@@ -69,7 +69,7 @@ export function SiteFooter() {
 
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500">
-            Help
+            সহায়তা
           </p>
           <ul className="mt-4 space-y-2.5">
             {helpLinks.map((item) => (
@@ -83,14 +83,14 @@ export function SiteFooter() {
               </li>
             ))}
             <li className="text-sm text-neutral-500">
-              Delivery &amp; returns policy
+              ডেলিভারি ও রিটার্ন নীতি
             </li>
           </ul>
         </div>
 
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-neutral-500">
-            Get in touch
+            যোগাযোগ
           </p>
           <ul className="mt-4 space-y-2.5 text-sm text-neutral-400">
             <li>
@@ -101,8 +101,8 @@ export function SiteFooter() {
                 {siteConfig.contact.email || "hello@bachmanbeauty.com"}
               </a>
             </li>
-            <li>{siteConfig.contact.phone || "Phone number coming soon"}</li>
-            <li>Dhaka, Bangladesh</li>
+            <li>{siteConfig.contact.phone || "ফোন নম্বর শীঘ্রই আসছে"}</li>
+            <li>ঢাকা, বাংলাদেশ</li>
           </ul>
         </div>
       </div>
@@ -110,10 +110,10 @@ export function SiteFooter() {
       <div className="border-t border-neutral-900">
         <div className="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-6 text-xs sm:flex-row sm:items-center sm:justify-between">
           <p className="text-neutral-500">
-            © {siteConfig.copyrightYear} {siteConfig.name}. All rights reserved.
+            © {siteConfig.copyrightYear} {siteConfig.name}। সর্বস্বত্ব সংরক্ষিত।
           </p>
           <div className="flex flex-wrap items-center gap-2">
-            {["Cash on Delivery", "bKash", "Nagad"].map((method) => (
+            {["ক্যাশ অন ডেলিভারি", "বিকাশ", "নগদ"].map((method) => (
               <span
                 key={method}
                 className="rounded-full border border-neutral-800 px-2.5 py-1 text-[10px] uppercase tracking-wide text-neutral-400"

@@ -25,7 +25,7 @@ export function ProductPurchase({ product }: { product: Product }) {
   if (!variant) {
     return (
       <p className="rounded-xl bg-neutral-100 px-4 py-3 text-sm text-neutral-600">
-        This product is not available right now.
+        এই প্রোডাক্টটি এখন পাওয়া যাচ্ছে না।
       </p>
     );
   }
@@ -67,7 +67,7 @@ export function ProductPurchase({ product }: { product: Product }) {
       {variants.length > 1 && (
         <div className="mt-5">
           <p className="text-xs font-medium uppercase tracking-wide text-neutral-500">
-            Size
+            সাইজ
           </p>
           <div className="mt-2 flex flex-wrap gap-2">
             {variants.map((item) => (
@@ -95,7 +95,7 @@ export function ProductPurchase({ product }: { product: Product }) {
             type="button"
             onClick={() => setQuantity((value) => Math.max(1, value - 1))}
             className="px-4 text-lg text-neutral-600 hover:text-neutral-900"
-            aria-label="Decrease quantity"
+            aria-label="পরিমাণ কমান"
           >
             −
           </button>
@@ -106,7 +106,7 @@ export function ProductPurchase({ product }: { product: Product }) {
               setQuantity((value) => Math.min(Math.max(1, maxStock), value + 1))
             }
             className="px-4 text-lg text-neutral-600 hover:text-neutral-900"
-            aria-label="Increase quantity"
+            aria-label="পরিমাণ বাড়ান"
           >
             +
           </button>
@@ -119,20 +119,20 @@ export function ProductPurchase({ product }: { product: Product }) {
           className="h-12 flex-1 rounded-full bg-neutral-900 px-8 text-sm font-medium text-white transition-colors hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-300 sm:flex-none"
         >
           {maxStock < 1
-            ? "Sold out"
+            ? "স্টক শেষ"
             : added
-              ? "Added to bag"
-              : "Add to bag"}
+              ? "ব্যাগে যোগ হয়েছে"
+              : "ব্যাগে যোগ করুন"}
         </button>
       </div>
 
       <p className="mt-3 text-xs text-neutral-500">
         {maxStock > 0
           ? maxStock <= 5
-            ? `Only ${maxStock} left in stock`
-            : "In stock"
-          : "Out of stock"}
-        {" · "}Cash on delivery available
+            ? `মাত্র ${maxStock}টি বাকি`
+            : "স্টকে আছে"
+          : "স্টক শেষ"}
+        {" · "}ক্যাশ অন ডেলিভারি আছে
       </p>
     </div>
   );

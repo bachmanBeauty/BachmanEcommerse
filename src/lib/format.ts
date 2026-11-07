@@ -1,11 +1,11 @@
 export function formatPrice(value: number) {
-  return `৳${value.toLocaleString("en-US", { maximumFractionDigits: 0 })}`;
+  return `৳${value.toLocaleString("bn-BD", { maximumFractionDigits: 0 })}`;
 }
 
 export function formatDate(value: string) {
-  return new Date(value).toLocaleDateString("en-GB", {
+  return new Date(value).toLocaleDateString("bn-BD", {
     day: "numeric",
-    month: "short",
+    month: "long",
     year: "numeric",
   });
 }

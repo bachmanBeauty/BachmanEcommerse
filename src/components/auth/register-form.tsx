@@ -19,18 +19,18 @@ export function RegisterForm() {
       <FormMessage state={state} />
 
       <div>
-        <Label htmlFor="fullName">Full name</Label>
+        <Label htmlFor="fullName">পূর্ণ নাম</Label>
         <Input
           id="fullName"
           name="fullName"
           autoComplete="name"
-          placeholder="Your name"
+          placeholder="আপনার নাম"
           required
         />
       </div>
 
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">ইমেইল</Label>
         <Input
           id="email"
           name="email"
@@ -42,26 +42,26 @@ export function RegisterForm() {
       </div>
 
       <div>
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">পাসওয়ার্ড</Label>
         <Input
           id="password"
           name="password"
           type="password"
           autoComplete="new-password"
-          placeholder="At least 8 characters"
+          placeholder="কমপক্ষে ৮ অক্ষর"
           minLength={8}
           required
         />
       </div>
 
       <Button type="submit" className="w-full" disabled={pending}>
-        {pending ? "Creating account…" : "Create account"}
+        {pending ? "অ্যাকাউন্ট তৈরি হচ্ছে…" : "অ্যাকাউন্ট তৈরি করুন"}
       </Button>
 
       <p className="text-center text-sm text-neutral-600">
-        Already have an account?{" "}
+        ইতিমধ্যে অ্যাকাউন্ট আছে?{" "}
         <Link href="/login" className="font-medium text-rose-600 hover:text-rose-700">
-          Sign in
+          সাইন ইন
         </Link>
       </p>
     </form>

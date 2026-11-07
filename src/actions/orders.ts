@@ -15,20 +15,20 @@ export type CheckoutState = { error?: string } | null;
 export type TrackState = { error?: string; order?: TrackedOrder } | null;
 
 const checkoutSchema = z.object({
-  customerName: z.string().trim().min(2, "Please enter your full name."),
-  customerPhone: z.string().trim().min(6, "Please enter a valid phone number."),
+  customerName: z.string().trim().min(2, "আপনার পূর্ণ নাম লিখুন।"),
+  customerPhone: z.string().trim().min(6, "সঠিক ফোন নম্বর দিন।"),
   customerEmail: z
     .string()
     .trim()
-    .email("Please enter a valid email address.")
+    .email("সঠিক ইমেইল দিন।")
     .optional()
     .or(z.literal("")),
-  shippingAddress: z.string().trim().min(10, "Please enter your full address."),
+  shippingAddress: z.string().trim().min(10, "সম্পূর্ণ ঠিকানা লিখুন।"),
   shippingArea: z.string().trim().optional(),
-  shippingCity: z.string().trim().min(2, "Please enter your city."),
+  shippingCity: z.string().trim().min(2, "শহরের নাম লিখুন।"),
   shippingDistrict: z.string().trim().optional(),
   shippingPostalCode: z.string().trim().optional(),
-  shippingZoneId: z.string().uuid("Please choose a delivery area."),
+  shippingZoneId: z.string().uuid("ডেলিভারি এলাকা বাছুন।"),
   paymentMethod: z.enum(["cod", "sslcommerz"]),
   note: z.string().trim().max(500).optional(),
 });
@@ -41,6 +41,28 @@ const itemsSchema = z
     }),
   )
   .min(1);
+
+function orderError(message: string) {
+  if (message.includes("Your bag is empty")) return "আপনার ব্যাগ খালি।";
+  if (message.includes("Not enough stock for")) {
+    return `স্টক পর্যাপ্ত নয়: ${message.replace("Not enough stock for", "").replace(/\.$/, "")}।`;
+  }
+  if (message.includes("no longer available")) {
+    return "ব্যাগের একটি প্রোডাক্ট আর পাওয়া যাচ্ছে না।";
+  }
+  if (message.includes("valid delivery area")) {
+    return "সঠিক ডেলিভারি এলাকা বাছুন।";
+  }
+  if (message.includes("Unsupported payment method")) {
+    return "এই পেমেন্ট পদ্ধতি এখন সমর্থিত নয়।";
+  }
+  if (message.includes("full name")) return "আপনার পূর্ণ নাম লিখুন।";
+  if (message.includes("valid phone")) return "সঠিক ফোন নম্বর দিন।";
+  if (message.includes("full delivery address")) {
+    return "সম্পূর্ণ ডেলিভারি ঠিকানা লিখুন।";
+  }
+  return "অর্ডার সম্পন্ন করা যায়নি। আবার চেষ্টা করুন।";
+}
 
 export async function placeOrder(
   _previousState: CheckoutState,
@@ -61,14 +83,14 @@ export async function placeOrder(
   });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Please check the form." };
+    return { error: parsed.error.issues[0]?.message ?? "ফর্মটি আবার দেখুন।" };
   }
 
   let items: z.infer<typeof itemsSchema>;
   try {
     items = itemsSchema.parse(JSON.parse(String(formData.get("items") ?? "[]")));
   } catch {
-    return { error: "Your bag is empty or invalid. Please add items again." };
+    return { error: "আপনার ব্যাগ খালি বা সমস্যা আছে। আবার আইটেম যোগ করুন।" };
   }
 
   const supabase = await createClient();
@@ -88,7 +110,7 @@ export async function placeOrder(
   });
 
   if (error) {
-    return { error: error.message };
+    return { error: orderError(error.message) };
   }
 
   const order = data as {
@@ -98,7 +120,7 @@ export async function placeOrder(
   } | null;
 
   if (!order?.order_number) {
-    return { error: "Could not create the order. Please try again." };
+    return { error: "অর্ডার তৈরি করা যায়নি। আবার চেষ্টা করুন।" };
   }
 
   await sendOrderEmail({
@@ -134,7 +156,7 @@ export async function placeOrder(
 
   if (parsed.data.paymentMethod === "sslcommerz") {
     if (!isSslcommerzEnabled()) {
-      return { error: "Online payment is not available right now." };
+      return { error: "অনলাইন পেমেন্ট এখন পাওয়া যাচ্ছে না।" };
     }
 
     let gatewayUrl: string;
@@ -152,8 +174,8 @@ export async function placeOrder(
       return {
         error:
           error instanceof Error
-            ? error.message
-            : "Could not start online payment.",
+            ? orderError(error.message)
+            : "অনলাইন পেমেন্ট শুরু করা যায়নি।",
       };
     }
 
@@ -171,8 +193,8 @@ export async function trackOrder(
 ): Promise<TrackState> {
   const parsed = z
     .object({
-      orderNumber: z.string().trim().min(3, "Enter your order number."),
-      phone: z.string().trim().min(6, "Enter the phone number used at checkout."),
+      orderNumber: z.string().trim().min(3, "অর্ডার নম্বর দিন।"),
+      phone: z.string().trim().min(6, "চেকআউটে দেওয়া ফোন নম্বর দিন।"),
     })
     .safeParse({
       orderNumber: String(formData.get("orderNumber") ?? ""),
@@ -180,7 +202,7 @@ export async function trackOrder(
     });
 
   if (!parsed.success) {
-    return { error: parsed.error.issues[0]?.message ?? "Please check the form." };
+    return { error: parsed.error.issues[0]?.message ?? "ফর্মটি আবার দেখুন।" };
   }
 
   const supabase = await createClient();
@@ -190,13 +212,13 @@ export async function trackOrder(
   });
 
   if (error) {
-    return { error: "We could not look up that order. Please try again." };
+    return { error: "অর্ডারটি খোঁজা যায়নি। আবার চেষ্টা করুন।" };
   }
 
   if (!data) {
     return {
       error:
-        "No order found with that number and phone. Please check and try again.",
+        "এই অর্ডার নম্বর ও ফোনে কোনো অর্ডার পাওয়া যায়নি। আবার দেখুন।",
     };
   }
 

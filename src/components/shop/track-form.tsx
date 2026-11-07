@@ -7,13 +7,14 @@ import { FormMessage } from "@/components/ui/form-message";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { formatDate, formatPrice } from "@/lib/format";
+import { orderStatusLabel } from "@/lib/order-status";
 
 const steps = [
-  { key: "pending", label: "Order placed" },
-  { key: "confirmed", label: "Confirmed" },
-  { key: "processing", label: "Preparing" },
-  { key: "shipped", label: "Shipped" },
-  { key: "delivered", label: "Delivered" },
+  { key: "pending", label: "অর্ডার হয়েছে" },
+  { key: "confirmed", label: "নিশ্চিত" },
+  { key: "processing", label: "প্রস্তুত হচ্ছে" },
+  { key: "shipped", label: "শিপড" },
+  { key: "delivered", label: "ডেলিভার্ড" },
 ] as const;
 
 export function TrackForm() {
@@ -29,7 +30,7 @@ export function TrackForm() {
         className="grid gap-4 rounded-2xl border border-neutral-200 bg-white p-6 sm:grid-cols-[1fr_1fr_auto]"
       >
         <div>
-          <Label htmlFor="orderNumber">Order number</Label>
+          <Label htmlFor="orderNumber">অর্ডার নম্বর</Label>
           <Input
             id="orderNumber"
             name="orderNumber"
@@ -38,18 +39,18 @@ export function TrackForm() {
           />
         </div>
         <div>
-          <Label htmlFor="phone">Phone number</Label>
+          <Label htmlFor="phone">ফোন নম্বর</Label>
           <Input
             id="phone"
             name="phone"
             type="tel"
-            placeholder="01XXXXXXXXX"
+            placeholder="০১XXXXXXXXX"
             required
           />
         </div>
         <div className="flex items-end">
           <Button type="submit" disabled={pending} className="h-10 w-full">
-            {pending ? "Checking…" : "Track order"}
+            {pending ? "খোঁজা হচ্ছে…" : "ট্র্যাক করুন"}
           </Button>
         </div>
         <div className="sm:col-span-3">
@@ -76,23 +77,24 @@ function OrderDetails({ order }: { order: NonNullable<TrackState>["order"] }) {
             {order.order_number}
           </p>
           <p className="mt-1 text-xs text-neutral-500">
-            Placed on {formatDate(order.created_at)} · {order.customer_name}
+            {formatDate(order.created_at)} · {order.customer_name}
           </p>
         </div>
         <span
           className={
             cancelled
-              ? "rounded-full bg-red-50 px-3 py-1 text-xs font-medium capitalize text-red-700"
-              : "rounded-full bg-rose-50 px-3 py-1 text-xs font-medium capitalize text-rose-700"
+              ? "rounded-full bg-red-50 px-3 py-1 text-xs font-medium text-red-700"
+              : "rounded-full bg-rose-50 px-3 py-1 text-xs font-medium text-rose-700"
           }
         >
-          {order.status}
+          {orderStatusLabel(order.status)}
         </span>
       </div>
 
       {cancelled ? (
         <p className="mt-4 rounded-xl bg-neutral-50 px-4 py-3 text-sm text-neutral-600">
-          This order is {order.status}. If you need help, please contact us.
+          এই অর্ডারটি {orderStatusLabel(order.status)}। সাহায্য দরকার হলে আমাদের
+          সাথে যোগাযোগ করুন।
         </p>
       ) : (
         <ol className="mt-6 grid gap-4 sm:grid-cols-5">
@@ -143,17 +145,17 @@ function OrderDetails({ order }: { order: NonNullable<TrackState>["order"] }) {
 
       <div className="mt-4 space-y-2 border-t border-neutral-200 pt-4 text-sm">
         <div className="flex justify-between">
-          <span className="text-neutral-500">Subtotal</span>
+          <span className="text-neutral-500">সাবটোটাল</span>
           <span className="text-neutral-900">{formatPrice(order.subtotal)}</span>
         </div>
         <div className="flex justify-between">
-          <span className="text-neutral-500">Delivery</span>
+          <span className="text-neutral-500">ডেলিভারি</span>
           <span className="text-neutral-900">
             {formatPrice(order.shipping_charge)}
           </span>
         </div>
         <div className="flex justify-between font-semibold">
-          <span>Total</span>
+          <span>মোট</span>
           <span>{formatPrice(order.total)}</span>
         </div>
       </div>

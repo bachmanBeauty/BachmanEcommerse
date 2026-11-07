@@ -23,7 +23,7 @@ export function LoginForm() {
       <FormMessage state={state} />
 
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">ইমেইল</Label>
         <Input
           id="email"
           name="email"
@@ -36,12 +36,12 @@ export function LoginForm() {
 
       <div>
         <div className="flex items-center justify-between">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password">পাসওয়ার্ড</Label>
           <Link
             href="/forgot-password"
             className="mb-1.5 text-xs font-medium text-rose-600 hover:text-rose-700"
           >
-            Forgot password?
+            পাসওয়ার্ড ভুলে গেছেন?
           </Link>
         </div>
         <Input
@@ -55,13 +55,13 @@ export function LoginForm() {
       </div>
 
       <Button type="submit" className="w-full" disabled={pending}>
-        {pending ? "Signing in…" : "Sign in"}
+        {pending ? "সাইন ইন হচ্ছে…" : "সাইন ইন"}
       </Button>
 
       <p className="text-center text-sm text-neutral-600">
-        New to Bachman Beauty?{" "}
+        নতুন?{" "}
         <Link href="/register" className="font-medium text-rose-600 hover:text-rose-700">
-          Create an account
+          অ্যাকাউন্ট খুলুন
         </Link>
       </p>
     </form>

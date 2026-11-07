@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import { WishlistButton } from "@/components/shop/product-card";
 import { ProductPurchase } from "@/components/shop/product-purchase";
 import { getProductBySlug } from "@/lib/catalog";
+import { categoryLabel } from "@/lib/category-labels";
 
 type ProductPageProps = {
   params: Promise<{ slug: string }>;
@@ -17,7 +18,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await getProductBySlug(slug);
 
-  if (!product) return { title: "Product not found" };
+  if (!product) return { title: "প্রোডাক্ট পাওয়া যায়নি" };
 
   return {
     title: product.name,
@@ -51,11 +52,11 @@ async function ProductContent({ params }: ProductPageProps) {
     <div className="mx-auto max-w-6xl px-4 py-10 sm:py-14">
       <nav className="flex items-center gap-2 text-xs text-neutral-500">
         <Link href="/" className="hover:text-neutral-800">
-          Home
+          হোম
         </Link>
         <span>/</span>
         <Link href="/shop" className="hover:text-neutral-800">
-          Shop
+          শপ
         </Link>
         {product.categories && (
           <>
@@ -64,7 +65,7 @@ async function ProductContent({ params }: ProductPageProps) {
               href={`/shop?category=${product.categories.slug}`}
               className="hover:text-neutral-800"
             >
-              {product.categories.name}
+              {categoryLabel(product.categories.slug, product.categories.name)}
             </Link>
           </>
         )}
@@ -116,7 +117,7 @@ async function ProductContent({ params }: ProductPageProps) {
             <div>
               {product.categories && (
                 <p className="text-xs font-semibold uppercase tracking-[0.15em] text-rose-600">
-                  {product.categories.name}
+                  {categoryLabel(product.categories.slug, product.categories.name)}
                 </p>
               )}
               <h1 className="mt-2 font-serif text-3xl tracking-tight text-neutral-900 sm:text-4xl">
@@ -158,7 +159,7 @@ async function ProductContent({ params }: ProductPageProps) {
             {product.description && (
               <details open className="group py-4">
                 <summary className="cursor-pointer list-none text-sm font-medium text-neutral-900">
-                  Description
+                  বিবরণ
                 </summary>
                 <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-neutral-600">
                   {product.description}
@@ -168,7 +169,7 @@ async function ProductContent({ params }: ProductPageProps) {
             {product.ingredients && (
               <details className="group py-4">
                 <summary className="cursor-pointer list-none text-sm font-medium text-neutral-900">
-                  Key ingredients
+                  মূল উপাদান
                 </summary>
                 <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-neutral-600">
                   {product.ingredients}
@@ -178,7 +179,7 @@ async function ProductContent({ params }: ProductPageProps) {
             {product.how_to_use && (
               <details className="group py-4">
                 <summary className="cursor-pointer list-none text-sm font-medium text-neutral-900">
-                  How to use
+                  ব্যবহারের নিয়ম
                 </summary>
                 <p className="mt-2 whitespace-pre-line text-sm leading-relaxed text-neutral-600">
                   {product.how_to_use}

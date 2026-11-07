@@ -4,12 +4,13 @@ import { Suspense } from "react";
 import { Icon, type IconName } from "@/components/admin/icon";
 import { AdminLoading } from "@/components/admin/loading";
 import { formatDate, formatPrice } from "@/lib/format";
+import { orderStatusLabel } from "@/lib/order-status";
 import { createClient } from "@/lib/supabase/server";
 import { daysAgoIso } from "@/lib/time";
 import { cn } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Admin dashboard",
+  title: "অ্যাডমিন ড্যাশবোর্ড",
 };
 
 const statusStyles: Record<string, string> = {
@@ -82,44 +83,44 @@ async function DashboardContent() {
     tint: string;
   }[] = [
     {
-      label: "Revenue",
+      label: "আয়",
       value: formatPrice(revenue),
-      note: "Last 30 days",
+      note: "গত ৩০ দিন",
       icon: "chart",
       tint: "bg-rose-50 text-rose-600",
     },
     {
-      label: "Paid online",
+      label: "অনলাইন পরিশোধ",
       value: formatPrice(paid),
-      note: "Last 30 days",
+      note: "গত ৩০ দিন",
       icon: "wallet",
       tint: "bg-emerald-50 text-emerald-600",
     },
     {
-      label: "Orders",
+      label: "অর্ডার",
       value: String(orders.count ?? 0),
-      note: "All time",
+      note: "সর্বকালের",
       icon: "cart",
       tint: "bg-sky-50 text-sky-600",
     },
     {
-      label: "Products",
+      label: "প্রোডাক্ট",
       value: String(products.count ?? 0),
-      note: "Active catalog",
+      note: "সক্রিয় ক্যাটালগ",
       icon: "box",
       tint: "bg-amber-50 text-amber-600",
     },
     {
-      label: "Customers",
+      label: "কাস্টমার",
       value: String(customers.count ?? 0),
-      note: "Registered accounts",
+      note: "নিবন্ধিত অ্যাকাউন্ট",
       icon: "users",
       tint: "bg-violet-50 text-violet-600",
     },
     {
-      label: "Pending reviews",
+      label: "অপেক্ষমাণ রিভিউ",
       value: String(reviews.count ?? 0),
-      note: "Need approval",
+      note: "অনুমোদন দরকার",
       icon: "star",
       tint: "bg-orange-50 text-orange-600",
     },
@@ -130,13 +131,13 @@ async function DashboardContent() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-rose-600">
-            Overview
+            সারসংক্ষেপ
           </p>
           <h1 className="mt-1 font-serif text-3xl tracking-tight text-neutral-900">
-            Dashboard
+            ড্যাশবোর্ড
           </h1>
           <p className="mt-1 text-sm text-neutral-500">
-            A clear look at your store&apos;s performance.
+            আপনার স্টোরের পারফরম্যান্স এক নজরে।
           </p>
         </div>
         <div className="flex flex-wrap gap-2">
@@ -144,13 +145,13 @@ async function DashboardContent() {
             href="/admin/products/new"
             className="inline-flex items-center gap-2 rounded-full bg-neutral-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-neutral-800"
           >
-            <Icon name="plus" className="h-4 w-4" /> Add product
+            <Icon name="plus" className="h-4 w-4" /> প্রোডাক্ট যোগ করুন
           </Link>
           <Link
             href="/admin/orders"
             className="inline-flex items-center gap-2 rounded-full border border-neutral-200 bg-white px-4 py-2 text-sm font-medium text-neutral-700 transition-colors hover:border-neutral-300"
           >
-            View orders <Icon name="arrow" className="h-4 w-4" />
+            অর্ডার দেখুন <Icon name="arrow" className="h-4 w-4" />
           </Link>
         </div>
       </div>
@@ -189,17 +190,17 @@ async function DashboardContent() {
           <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
             <div>
               <h2 className="text-sm font-semibold text-neutral-900">
-                Recent orders
+                সাম্প্রতিক অর্ডার
               </h2>
               <p className="text-xs text-neutral-500">
-                Latest activity from your store
+                স্টোরের সর্বশেষ কার্যক্রম
               </p>
             </div>
             <Link
               href="/admin/orders"
               className="inline-flex items-center gap-1 text-xs font-medium text-rose-600 hover:text-rose-700"
             >
-              View all <Icon name="arrow" className="h-3.5 w-3.5" />
+              সব দেখুন <Icon name="arrow" className="h-3.5 w-3.5" />
             </Link>
           </div>
 
@@ -227,12 +228,12 @@ async function DashboardContent() {
                     </span>
                     <span
                       className={cn(
-                        "rounded-full px-2.5 py-0.5 text-[11px] font-medium capitalize ring-1",
+                        "rounded-full px-2.5 py-0.5 text-[11px] font-medium ring-1",
                         statusStyles[order.status] ??
                           "bg-neutral-100 text-neutral-600 ring-neutral-200",
                       )}
                     >
-                      {order.status}
+                      {orderStatusLabel(order.status)}
                     </span>
                   </div>
                 </Link>
@@ -240,7 +241,7 @@ async function DashboardContent() {
             ))}
             {(recent.data ?? []).length === 0 && (
               <li className="px-5 py-10 text-center text-sm text-neutral-500">
-                No orders yet. Share your store to get started.
+                এখনো কোনো অর্ডার নেই। স্টোর শেয়ার করে শুরু করুন।
               </li>
             )}
           </ul>
@@ -250,15 +251,15 @@ async function DashboardContent() {
           <div className="flex items-center justify-between border-b border-neutral-100 px-5 py-4">
             <div>
               <h2 className="text-sm font-semibold text-neutral-900">
-                Low stock
+                কম স্টক
               </h2>
-              <p className="text-xs text-neutral-500">5 or fewer remaining</p>
+              <p className="text-xs text-neutral-500">৫টি বা কম বাকি</p>
             </div>
             <Link
               href="/admin/inventory"
               className="inline-flex items-center gap-1 text-xs font-medium text-rose-600 hover:text-rose-700"
             >
-              Manage <Icon name="arrow" className="h-3.5 w-3.5" />
+              ম্যানেজ <Icon name="arrow" className="h-3.5 w-3.5" />
             </Link>
           </div>
 
@@ -274,7 +275,7 @@ async function DashboardContent() {
                 >
                   <div className="min-w-0">
                     <p className="truncate text-sm text-neutral-800">
-                      {product?.name ?? "Product"}
+                      {product?.name ?? "প্রোডাক্ট"}
                     </p>
                     <p className="text-[11px] text-neutral-400">{variant.name}</p>
                   </div>
@@ -287,15 +288,15 @@ async function DashboardContent() {
                     )}
                   >
                     {variant.stock_quantity === 0
-                      ? "Out of stock"
-                      : `${variant.stock_quantity} left`}
+                      ? "স্টক শেষ"
+                      : `${variant.stock_quantity}টি বাকি`}
                   </span>
                 </li>
               );
             })}
             {(lowStock.data ?? []).length === 0 && (
               <li className="px-5 py-10 text-center text-sm text-neutral-500">
-                Stock levels look healthy.
+                স্টক ঠিক আছে।
               </li>
             )}
           </ul>

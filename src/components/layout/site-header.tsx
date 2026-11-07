@@ -5,9 +5,9 @@ import { useState } from "react";
 import { useStore } from "@/components/store/store-provider";
 
 const navigation = [
-  { href: "/shop", label: "Shop" },
-  { href: "/about", label: "Our story" },
-  { href: "/contact", label: "Contact" },
+  { href: "/shop", label: "শপ" },
+  { href: "/about", label: "আমাদের গল্প" },
+  { href: "/contact", label: "যোগাযোগ" },
 ];
 
 export function SiteHeader() {
@@ -17,10 +17,10 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50">
       <div className="bg-neutral-950 px-4 py-2 text-center text-[11px] tracking-wide text-neutral-200 sm:text-xs">
-        Free delivery over ৳2,000 inside Dhaka · Cash on delivery nationwide
+        ঢাকার ভিতরে ৳২,০০০-এর উপরে ফ্রি ডেলিভারি · সারা দেশে ক্যাশ অন ডেলিভারি
       </div>
 
-      <div className="border-b border-neutral-200/70 bg-[#fbf8f4]/90 backdrop-blur">
+      <div className="border-b border-neutral-200/70 bg-[#fff7ee]/90 backdrop-blur">
         <div className="mx-auto flex h-[68px] max-w-6xl items-center justify-between gap-4 px-4">
           <Link href="/" className="flex items-center gap-2.5">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-neutral-900 font-serif text-base text-white">
@@ -31,7 +31,7 @@ export function SiteHeader() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-9 md:flex" aria-label="Main">
+          <nav className="hidden items-center gap-9 md:flex" aria-label="প্রধান মেনু">
             {navigation.map((item) => (
               <Link
                 key={item.href}
@@ -46,7 +46,7 @@ export function SiteHeader() {
           <div className="flex items-center gap-0.5">
             <Link
               href="/wishlist"
-              aria-label="Wishlist"
+              aria-label="উইশলিস্ট"
               className="rounded-full p-2.5 text-neutral-700 transition-colors hover:bg-neutral-900/5"
             >
               <svg
@@ -67,7 +67,7 @@ export function SiteHeader() {
 
             <Link
               href="/account"
-              aria-label="Account"
+              aria-label="আমার অ্যাকাউন্ট"
               className="hidden rounded-full p-2.5 text-neutral-700 transition-colors hover:bg-neutral-900/5 sm:block"
             >
               <svg
@@ -88,7 +88,7 @@ export function SiteHeader() {
 
             <Link
               href="/cart"
-              aria-label="Shopping bag"
+              aria-label="শপিং ব্যাগ"
               className="relative rounded-full p-2.5 text-neutral-700 transition-colors hover:bg-neutral-900/5"
             >
               <svg
@@ -115,7 +115,7 @@ export function SiteHeader() {
               onClick={() => setOpen((value) => !value)}
               aria-expanded={open}
               aria-controls="mobile-navigation"
-              aria-label={open ? "Close menu" : "Open menu"}
+              aria-label={open ? "মেনু বন্ধ করুন" : "মেনু খুলুন"}
               className="rounded-full p-2.5 text-neutral-700 transition-colors hover:bg-neutral-900/5 md:hidden"
             >
               {open ? (
@@ -148,8 +148,8 @@ export function SiteHeader() {
         {open && (
           <nav
             id="mobile-navigation"
-            aria-label="Mobile"
-            className="border-t border-neutral-200/70 bg-[#fbf8f4] md:hidden"
+            aria-label="মোবাইল মেনু"
+            className="border-t border-neutral-200/70 bg-[#fff7ee] md:hidden"
           >
             <div className="mx-auto flex max-w-6xl flex-col px-4 py-2">
               {navigation.map((item) => (
@@ -167,14 +167,14 @@ export function SiteHeader() {
                 onClick={() => setOpen(false)}
                 className="border-b border-neutral-200/60 py-3.5 text-sm text-neutral-600"
               >
-                My account
+                আমার অ্যাকাউন্ট
               </Link>
               <Link
                 href="/wishlist"
                 onClick={() => setOpen(false)}
                 className="py-3.5 text-sm text-neutral-600"
               >
-                Wishlist
+                উইশলিস্ট
               </Link>
             </div>
           </nav>

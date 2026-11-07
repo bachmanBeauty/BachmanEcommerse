@@ -7,47 +7,47 @@ import type { Product } from "@/types/catalog";
 
 const categories = [
   {
-    name: "Cleanser",
-    note: "A fresh start",
+    name: "ক্লিনজার",
+    note: "ফ্রেশ শুরু",
     href: "/shop?category=cleanser",
-    gradient: "from-rose-200 via-rose-100 to-[#fbf3ec]",
+    gradient: "from-rose-200 via-rose-100 to-[#fff3e6]",
   },
   {
-    name: "Toner",
-    note: "Balance",
+    name: "টোনার",
+    note: "ব্যালান্স",
     href: "/shop?category=toner",
-    gradient: "from-amber-200 via-amber-100 to-[#fbf5ea]",
+    gradient: "from-amber-200 via-amber-100 to-[#fff6e8]",
   },
   {
-    name: "Serum",
-    note: "Target concerns",
+    name: "সিরাম",
+    note: "লক্ষ্য ঠিক করুন",
     href: "/shop?category=serum",
-    gradient: "from-emerald-200 via-emerald-100 to-[#f3f8f1]",
+    gradient: "from-emerald-200 via-emerald-100 to-[#f5f8f0]",
   },
   {
-    name: "Moisturizer",
-    note: "Lock in hydration",
+    name: "ময়েশ্চারাইজার",
+    note: "হাইড্রেশন ধরে রাখুন",
     href: "/shop?category=moisturizer",
-    gradient: "from-sky-200 via-sky-100 to-[#f1f6f9]",
+    gradient: "from-sky-200 via-sky-100 to-[#f2f6f8]",
   },
   {
-    name: "Sunscreen",
-    note: "Everyday protection",
+    name: "সানস্ক্রিন",
+    note: "প্রতিদিনের সুরক্ষা",
     href: "/shop?category=sunscreen",
-    gradient: "from-orange-200 via-orange-100 to-[#fbf4ec]",
+    gradient: "from-orange-200 via-orange-100 to-[#fff4e9]",
   },
   {
-    name: "Face Mask",
-    note: "Weekly treat",
+    name: "ফেস মাস্ক",
+    note: "সাপ্তাহিক যত্ন",
     href: "/shop?category=face-mask",
-    gradient: "from-violet-200 via-violet-100 to-[#f6f3fa]",
+    gradient: "from-violet-200 via-violet-100 to-[#f8f3f6]",
   },
 ];
 
 const benefits = [
   {
-    title: "Authentic products",
-    description: "Sourced directly, never re-packed or diluted.",
+    title: "আসল প্রোডাক্ট",
+    description: "সরাসরি সোর্স করা, কখনো রি-প্যাক বা ভেজাল নয়।",
     icon: (
       <path
         strokeLinecap="round"
@@ -57,8 +57,8 @@ const benefits = [
     ),
   },
   {
-    title: "Cash on delivery",
-    description: "Pay only when your order reaches your door.",
+    title: "ক্যাশ অন ডেলিভারি",
+    description: "প্রোডাক্ট হাতে পেয়ে টাকা দিন।",
     icon: (
       <path
         strokeLinecap="round"
@@ -68,8 +68,8 @@ const benefits = [
     ),
   },
   {
-    title: "Nationwide delivery",
-    description: "Inside Dhaka in 1–2 days, outside in 2–4 days.",
+    title: "সারা দেশে ডেলিভারি",
+    description: "ঢাকায় ১–২ দিন, ঢাকার বাইরে ২–৪ দিন।",
     icon: (
       <path
         strokeLinecap="round"
@@ -79,8 +79,8 @@ const benefits = [
     ),
   },
   {
-    title: "Real support",
-    description: "Talk to us before you buy — we reply personally.",
+    title: "সত্যিকারের সাপোর্ট",
+    description: "কেনার আগেই কথা বলুন — আমরা নিজেরাই উত্তর দিই।",
     icon: (
       <path
         strokeLinecap="round"
@@ -95,21 +95,22 @@ export default function HomePage() {
   return (
     <>
       <section className="relative overflow-hidden">
-        <div className="pointer-events-none absolute -left-40 -top-40 h-96 w-96 rounded-full bg-rose-200/40 blur-3xl" />
-        <div className="pointer-events-none absolute -right-32 top-40 h-96 w-96 rounded-full bg-amber-200/30 blur-3xl" />
+        <div className="pointer-events-none absolute -left-40 -top-40 h-96 w-96 rounded-full bg-rose-200/50 blur-3xl" />
+        <div className="pointer-events-none absolute -right-32 top-40 h-96 w-96 rounded-full bg-amber-200/40 blur-3xl" />
 
         <div className="mx-auto grid max-w-6xl items-center gap-14 px-4 py-16 sm:py-24 lg:grid-cols-[1.05fr_0.95fr] lg:py-28">
           <div>
-            <p className="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-rose-700">
+            <p className="font-script text-3xl text-rose-700">স্বাগতম</p>
+            <p className="mt-1 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-neutral-500">
               <span className="h-px w-8 bg-rose-400" />
-              Skincare, simplified
+              ত্বকের যত্ন, সহজ করে
             </p>
-            <h1 className="mt-5 font-serif text-4xl leading-[1.05] tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl">
-              Healthy skin starts with a gentle routine.
+            <h1 className="mt-5 font-serif text-4xl leading-[1.15] tracking-tight text-neutral-900 sm:text-5xl lg:text-6xl">
+              সুস্থ ত্বকের শুরু এক কোমল রুটিনে।
             </h1>
             <p className="mt-6 max-w-md text-base leading-relaxed text-neutral-600">
-              Thoughtfully formulated skincare made for Bangladeshi skin and
-              weather. Honest ingredients, no noise, visible results.
+              বাংলাদেশের আবহাওয়া ও ত্বকের কথা ভেবে তৈরি স্কিনকেয়ার। সৎ উপাদান,
+              বাড়তি কথা নেই, দৃশ্যমান ফলাফল।
             </p>
 
             <div className="mt-9 flex flex-wrap gap-3">
@@ -118,7 +119,7 @@ export default function HomePage() {
                 size="lg"
                 className="rounded-full bg-neutral-900 px-8 hover:bg-neutral-800"
               >
-                Shop the collection
+                কালেকশন দেখুন
               </ButtonLink>
               <ButtonLink
                 href="/about"
@@ -126,12 +127,12 @@ export default function HomePage() {
                 variant="outline"
                 className="rounded-full border-neutral-300 bg-transparent px-8"
               >
-                Our story
+                আমাদের গল্প
               </ButtonLink>
             </div>
 
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-2 text-xs text-neutral-500">
-              {["Authentic products", "Cash on delivery", "Nationwide shipping"].map(
+              {["আসল প্রোডাক্ট", "ক্যাশ অন ডেলিভারি", "সারা দেশে ডেলিভারি"].map(
                 (item) => (
                   <span key={item} className="flex items-center gap-1.5">
                     <svg
@@ -152,19 +153,19 @@ export default function HomePage() {
           </div>
 
           <div className="relative mx-auto w-full max-w-md">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-rose-200 via-[#f4e3d7] to-amber-100 shadow-2xl shadow-rose-200/50">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-rose-200 via-[#f6e7d8] to-amber-100 shadow-2xl shadow-rose-200/50">
               <div className="absolute -right-12 top-8 h-52 w-52 rounded-full border border-white/50" />
               <div className="absolute -right-6 top-16 h-52 w-52 rounded-full border border-white/40" />
               <div className="absolute left-7 top-7 rounded-full bg-white/60 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.18em] text-neutral-700 backdrop-blur">
-                New collection
+                নতুন কালেকশন
               </div>
 
               <div className="absolute inset-x-6 bottom-6 rounded-2xl bg-white/75 p-5 backdrop-blur-md">
                 <p className="font-serif text-xl text-neutral-900">
-                  The daily ritual
+                  প্রতিদিনের রুটিন
                 </p>
                 <ol className="mt-3 space-y-2">
-                  {["Cleanse", "Treat", "Moisturise", "Protect"].map(
+                  {["ক্লিনজ", "ট্রিট", "ময়েশ্চারাইজ", "সানস্ক্রিন"].map(
                     (step, index) => (
                       <li
                         key={step}
@@ -187,10 +188,10 @@ export default function HomePage() {
       <section className="border-y border-neutral-200/70 bg-white/50">
         <div className="mx-auto grid max-w-6xl grid-cols-2 gap-6 px-4 py-7 text-xs text-neutral-600 sm:grid-cols-4 sm:text-sm">
           {[
-            "Dermatologist-informed",
-            "Cruelty-free formulas",
-            "Cash on delivery",
-            "Delivery all over Bangladesh",
+            "ডার্মাটোলজিস্ট-পরামর্শিত",
+            "ক্রুয়েলটি-ফ্রি ফর্মুলা",
+            "ক্যাশ অন ডেলিভারি",
+            "সারা বাংলাদেশে ডেলিভারি",
           ].map((item) => (
             <p key={item} className="flex items-center justify-center gap-2 text-center">
               <span className="h-1 w-1 rounded-full bg-rose-500" />
@@ -205,20 +206,20 @@ export default function HomePage() {
           <div className="flex flex-wrap items-end justify-between gap-4">
             <div>
               <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-700">
-                The edit
+                নির্বাচিত
               </p>
               <h2 className="mt-2 font-serif text-3xl tracking-tight text-neutral-900 sm:text-4xl">
-                Bestsellers
+                বেস্টসেলার
               </h2>
               <p className="mt-2 max-w-md text-sm text-neutral-600">
-                The essentials our customers reach for again and again.
+                যে প্রোডাক্টগুলো কাস্টমাররা বারবার বেছে নেন।
               </p>
             </div>
             <Link
               href="/shop"
               className="text-sm font-medium text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900"
             >
-              Shop all products
+              সব প্রোডাক্ট দেখুন
             </Link>
           </div>
 
@@ -232,13 +233,14 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="max-w-xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-700">
-              Categories
+              ক্যাটাগরি
             </p>
             <h2 className="mt-2 font-serif text-3xl tracking-tight text-neutral-900 sm:text-4xl">
-              Build your routine
+              নিজের রুটিন গড়ুন
             </h2>
             <p className="mt-2 text-sm text-neutral-600">
-              Start with the steps that matter. Add slowly, keep it simple.
+              যেসব ধাপ আসলে দরকার, সেখান থেকেই শুরু করুন। ধীরে ধীরে যোগ করুন,
+              সহজ রাখুন।
             </p>
           </div>
 
@@ -275,18 +277,18 @@ export default function HomePage() {
 
       <section className="py-16 sm:py-24">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-4 lg:grid-cols-2">
-          <div className="relative order-2 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#e8d3c5] via-[#f1e3d8] to-[#f8f1e9] p-10 lg:order-1">
+          <div className="relative order-2 overflow-hidden rounded-[2rem] bg-gradient-to-br from-[#f3d8c3] via-[#f9e8d9] to-[#fff5ea] p-10 lg:order-1">
             <div className="flex aspect-[5/4] flex-col justify-between">
               <span className="text-[10px] uppercase tracking-[0.24em] text-neutral-500">
-                Est. 2026 · Dhaka
+                প্রতিষ্ঠা ২০২৬ · ঢাকা
               </span>
               <div>
                 <p className="font-serif text-4xl leading-tight text-neutral-900 sm:text-5xl">
-                  Made for real routines.
+                  আসল রুটিনের জন্য তৈরি।
                 </p>
                 <p className="mt-3 max-w-xs text-sm text-neutral-600">
-                  A small collection, chosen carefully for humid summers, dusty
-                  winters and everyday life.
+                  ছোট একটা কালেকশন, যত্ন করে বাছাই করা — আর্দ্র গ্রীষ্ম, ধুলোভরা
+                  শীত আর প্রতিদিনের জীবনের জন্য।
                 </p>
               </div>
             </div>
@@ -296,26 +298,25 @@ export default function HomePage() {
 
           <div className="order-1 lg:order-2">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-700">
-              Our story
+              আমাদের গল্প
             </p>
             <h2 className="mt-2 font-serif text-3xl tracking-tight text-neutral-900 sm:text-4xl">
-              Fewer products. Better choices.
+              কম প্রোডাক্ট, ভালো সিদ্ধান্ত।
             </h2>
             <p className="mt-4 text-base leading-relaxed text-neutral-600">
-              We started Bachman Beauty because skincare felt loud and
-              complicated. Too many steps, too many claims, very little made for
-              our skin and our weather.
+              স্কিনকেয়ারকে ঘিরে অনেক হৈচৈ আর জটিলতা দেখে বাচম্যান বিউটির শুরু।
+              অনেক ধাপ, অনেক দাবি — কিন্তু আমাদের ত্বক আর আবহাওয়ার জন্য খুব কম।
             </p>
             <p className="mt-3 text-base leading-relaxed text-neutral-600">
-              So we are building a focused collection — cleansers, serums,
-              moisturizers and sunscreens — authentic, clearly explained and easy
-              to keep up with.
+              তাই আমরা একটা ফোকাসড কালেকশন গড়ছি — ক্লিনজার, সিরাম, ময়েশ্চারাইজার
+              আর সানস্ক্রিন। আসল প্রোডাক্ট, স্পষ্ট ব্যাখ্যা, আর সহজে মানা যায় এমন
+              রুটিন।
             </p>
             <ul className="mt-6 space-y-2.5">
               {[
-                "Authentic, directly sourced products",
-                "Clear ingredients and honest claims",
-                "Simple routines you can actually follow",
+                "সরাসরি সোর্স করা আসল প্রোডাক্ট",
+                "স্পষ্ট উপাদান আর সৎ দাবি",
+                "সহজে অনুসরণযোগ্য রুটিন",
               ].map((item) => (
                 <li key={item} className="flex items-start gap-2.5 text-sm text-neutral-700">
                   <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-rose-100 text-rose-700">
@@ -336,7 +337,7 @@ export default function HomePage() {
             </ul>
             <div className="mt-7">
               <ButtonLink href="/about" variant="outline" className="rounded-full">
-                Read our story
+                গল্পটি পড়ুন
               </ButtonLink>
             </div>
           </div>
@@ -347,10 +348,10 @@ export default function HomePage() {
         <div className="mx-auto max-w-6xl px-4">
           <div className="max-w-xl">
             <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-rose-700">
-              Why Bachman Beauty
+              কেন বাচম্যান বিউটি
             </p>
             <h2 className="mt-2 font-serif text-3xl tracking-tight text-neutral-900 sm:text-4xl">
-              Shopping made simple
+              কেনাকাটা সহজ
             </h2>
           </div>
 
@@ -358,9 +359,9 @@ export default function HomePage() {
             {benefits.map((benefit) => (
               <div
                 key={benefit.title}
-                className="rounded-2xl border border-neutral-200/80 bg-[#fbf8f4] p-6 transition-shadow hover:shadow-md hover:shadow-neutral-200/60"
+                className="rounded-2xl border border-neutral-200/80 bg-white p-6 transition-shadow hover:shadow-md hover:shadow-neutral-200/60"
               >
-                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-white text-neutral-800 ring-1 ring-neutral-200">
+                <span className="flex h-10 w-10 items-center justify-center rounded-full bg-[#fff7ee] text-neutral-800 ring-1 ring-neutral-200">
                   <svg
                     viewBox="0 0 24 24"
                     fill="none"
@@ -389,14 +390,14 @@ export default function HomePage() {
           <div className="pointer-events-none absolute -left-20 top-0 h-64 w-64 rounded-full bg-rose-500/20 blur-3xl" />
           <div className="pointer-events-none absolute -right-20 bottom-0 h-64 w-64 rounded-full bg-amber-500/10 blur-3xl" />
           <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-rose-300">
-            Need a hand?
+            সাহায্য দরকার?
           </p>
           <h2 className="mx-auto mt-3 max-w-xl font-serif text-3xl leading-tight tracking-tight text-white sm:text-4xl">
-            Not sure where to start? We will build a routine with you.
+            শুরু কোথায় করবেন বুঝতে পারছেন না? আমরা একসাথে রুটিন বানাব।
           </h2>
           <p className="mx-auto mt-4 max-w-md text-sm leading-relaxed text-neutral-400">
-            Tell us about your skin and we will suggest a simple, honest routine.
-            No pressure, no guesswork.
+            আপনার ত্বক নিয়ে বলুন, আমরা সহজ ও সৎ একটা রুটিন সাজিয়ে দেব। কোনো
+            চাপ নেই, কোনো অনুমান নেই।
           </p>
           <div className="mt-8">
             <ButtonLink
@@ -404,7 +405,7 @@ export default function HomePage() {
               size="lg"
               className="rounded-full bg-white px-8 text-neutral-900 hover:bg-neutral-100"
             >
-              Talk to us
+              কথা বলুন
             </ButtonLink>
           </div>
         </div>
@@ -422,13 +423,14 @@ async function FeaturedGrid() {
     return (
       <div className="mt-8 rounded-2xl border border-dashed border-neutral-300 bg-white px-6 py-14 text-center">
         <p className="font-serif text-xl text-neutral-900">
-          The first collection is on its way
+          প্রথম কালেকশন আসছে
         </p>
         <p className="mx-auto mt-2 max-w-sm text-sm text-neutral-600">
-          Products are being prepared. Check back soon or get in touch.
+          প্রোডাক্ট প্রস্তুত হচ্ছে। শীঘ্রই আবার দেখুন বা আমাদের সাথে যোগাযোগ
+          করুন।
         </p>
         <div className="mt-6 flex justify-center">
-          <ButtonLink href="/contact">Contact us</ButtonLink>
+          <ButtonLink href="/contact">যোগাযোগ করুন</ButtonLink>
         </div>
       </div>
     );

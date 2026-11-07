@@ -24,7 +24,7 @@ export function ProfileForm({
       <FormMessage state={state} />
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
-          <Label htmlFor="fullName">Full name</Label>
+          <Label htmlFor="fullName">পূর্ণ নাম</Label>
           <Input
             id="fullName"
             name="fullName"
@@ -34,19 +34,19 @@ export function ProfileForm({
           />
         </div>
         <div>
-          <Label htmlFor="phone">Phone</Label>
+          <Label htmlFor="phone">ফোন</Label>
           <Input
             id="phone"
             name="phone"
             type="tel"
             defaultValue={defaultPhone}
             autoComplete="tel"
-            placeholder="01XXXXXXXXX"
+            placeholder="০১XXXXXXXXX"
           />
         </div>
       </div>
       <Button type="submit" disabled={pending} size="sm">
-        {pending ? "Saving…" : "Save changes"}
+        {pending ? "সংরক্ষণ হচ্ছে…" : "পরিবর্তন সংরক্ষণ করুন"}
       </Button>
     </form>
   );

@@ -51,15 +51,15 @@ export function CheckoutForm({
 
   if (cart.length === 0) {
     return (
-      <div className="mt-10 rounded-2xl border border-dashed border-neutral-300 bg-neutral-50 px-6 py-16 text-center">
+      <div className="mt-10 rounded-2xl border border-dashed border-neutral-300 bg-white px-6 py-16 text-center">
         <h2 className="font-serif text-2xl text-neutral-900">
-          Your bag is empty
+          আপনার ব্যাগ খালি
         </h2>
         <p className="mx-auto mt-2 max-w-sm text-sm text-neutral-600">
-          Add something to your bag before checking out.
+          চেকআউটের আগে ব্যাগে কিছু যোগ করুন।
         </p>
         <div className="mt-6 flex justify-center">
-          <ButtonLink href="/shop">Browse the shop</ButtonLink>
+          <ButtonLink href="/shop">শপ দেখুন</ButtonLink>
         </div>
       </div>
     );
@@ -77,11 +77,11 @@ export function CheckoutForm({
 
         <section className="rounded-2xl border border-neutral-200 bg-white p-6">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-            Contact
+            যোগাযোগ
           </h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div>
-              <Label htmlFor="customerName">Full name</Label>
+              <Label htmlFor="customerName">পূর্ণ নাম</Label>
               <Input
                 id="customerName"
                 name="customerName"
@@ -91,19 +91,19 @@ export function CheckoutForm({
               />
             </div>
             <div>
-              <Label htmlFor="customerPhone">Phone</Label>
+              <Label htmlFor="customerPhone">ফোন</Label>
               <Input
                 id="customerPhone"
                 name="customerPhone"
                 type="tel"
                 defaultValue={defaults.phone}
                 autoComplete="tel"
-                placeholder="01XXXXXXXXX"
+                placeholder="০১XXXXXXXXX"
                 required
               />
             </div>
             <div className="sm:col-span-2">
-              <Label htmlFor="customerEmail">Email (optional)</Label>
+              <Label htmlFor="customerEmail">ইমেইল (ঐচ্ছিক)</Label>
               <Input
                 id="customerEmail"
                 name="customerEmail"
@@ -118,58 +118,58 @@ export function CheckoutForm({
 
         <section className="rounded-2xl border border-neutral-200 bg-white p-6">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-            Delivery address
+            ডেলিভারি ঠিকানা
           </h2>
           <div className="mt-4 grid gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <Label htmlFor="shippingAddress">Address</Label>
+              <Label htmlFor="shippingAddress">ঠিকানা</Label>
               <Input
                 id="shippingAddress"
                 name="shippingAddress"
                 autoComplete="street-address"
-                placeholder="House, road, block"
+                placeholder="বাসা, রোড, ব্লক"
                 required
               />
             </div>
             <div>
-              <Label htmlFor="shippingArea">Area</Label>
+              <Label htmlFor="shippingArea">এলাকা</Label>
               <Input
                 id="shippingArea"
                 name="shippingArea"
                 autoComplete="address-level3"
-                placeholder="e.g. Dhanmondi"
+                placeholder="যেমন: ধানমন্ডি"
               />
             </div>
             <div>
-              <Label htmlFor="shippingCity">City</Label>
+              <Label htmlFor="shippingCity">শহর</Label>
               <Input
                 id="shippingCity"
                 name="shippingCity"
-                defaultValue="Dhaka"
+                defaultValue="ঢাকা"
                 autoComplete="address-level2"
                 required
               />
             </div>
             <div>
-              <Label htmlFor="shippingDistrict">District</Label>
+              <Label htmlFor="shippingDistrict">জেলা</Label>
               <Input
                 id="shippingDistrict"
                 name="shippingDistrict"
                 autoComplete="address-level1"
-                placeholder="e.g. Dhaka"
+                placeholder="যেমন: ঢাকা"
               />
             </div>
             <div>
-              <Label htmlFor="shippingPostalCode">Postal code</Label>
+              <Label htmlFor="shippingPostalCode">পোস্ট কোড</Label>
               <Input
                 id="shippingPostalCode"
                 name="shippingPostalCode"
                 autoComplete="postal-code"
-                placeholder="1209"
+                placeholder="১২০৯"
               />
             </div>
             <div className="sm:col-span-2">
-              <Label htmlFor="shippingZoneId">Delivery area</Label>
+              <Label htmlFor="shippingZoneId">ডেলিভারি এলাকা</Label>
               <select
                 id="shippingZoneId"
                 name="shippingZoneId"
@@ -191,7 +191,7 @@ export function CheckoutForm({
 
         <section className="rounded-2xl border border-neutral-200 bg-white p-6">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-            Payment
+            পেমেন্ট
           </h2>
           <label className="mt-4 flex items-start gap-3 rounded-xl border border-neutral-300 p-4">
             <input
@@ -203,10 +203,10 @@ export function CheckoutForm({
             />
             <span>
               <span className="block text-sm font-medium text-neutral-900">
-                Cash on delivery
+                ক্যাশ অন ডেলিভারি
               </span>
               <span className="mt-0.5 block text-xs text-neutral-500">
-                Pay in cash when your order arrives.
+                প্রোডাক্ট হাতে পেয়ে টাকা দিন।
               </span>
             </span>
           </label>
@@ -221,27 +221,27 @@ export function CheckoutForm({
               />
               <span>
                 <span className="block text-sm font-medium text-neutral-900">
-                  Pay online — bKash, Nagad or card
+                  অনলাইনে পেমেন্ট — বিকাশ, নগদ বা কার্ড
                 </span>
                 <span className="mt-0.5 block text-xs text-neutral-500">
-                  Secure payment via SSLCommerz.
+                  SSLCommerz দিয়ে নিরাপদ পেমেন্ট।
                 </span>
               </span>
             </label>
           ) : (
             <p className="mt-3 text-xs text-neutral-500">
-              Online payment is coming soon.
+              অনলাইন পেমেন্ট শীঘ্রই আসছে।
             </p>
           )}
         </section>
 
         <section className="rounded-2xl border border-neutral-200 bg-white p-6">
-          <Label htmlFor="note">Order note (optional)</Label>
+          <Label htmlFor="note">অর্ডার নোট (ঐচ্ছিক)</Label>
           <textarea
             id="note"
             name="note"
             rows={3}
-            placeholder="Anything we should know about your delivery?"
+            placeholder="ডেলিভারি নিয়ে কিছু জানাতে চান?"
             className="w-full rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm focus-visible:border-rose-500 focus-visible:outline-none"
           />
         </section>
@@ -249,7 +249,7 @@ export function CheckoutForm({
 
       <aside className="h-fit rounded-2xl border border-neutral-200 bg-white p-6">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-          Order summary
+          অর্ডার সারাংশ
         </h2>
 
         <ul className="mt-4 divide-y divide-neutral-100">
@@ -261,7 +261,7 @@ export function CheckoutForm({
                 </span>
                 <span className="text-xs text-neutral-500">
                   {item.variantName ? `${item.variantName} · ` : ""}
-                  Qty {item.quantity}
+                  পরিমাণ {item.quantity}
                 </span>
               </span>
               <span className="shrink-0 text-neutral-900">
@@ -273,17 +273,17 @@ export function CheckoutForm({
 
         <dl className="mt-4 space-y-2 border-t border-neutral-200 pt-4 text-sm">
           <div className="flex justify-between">
-            <dt className="text-neutral-600">Subtotal</dt>
+            <dt className="text-neutral-600">সাবটোটাল</dt>
             <dd className="text-neutral-900">{formatPrice(subtotal)}</dd>
           </div>
           <div className="flex justify-between">
-            <dt className="text-neutral-600">Delivery</dt>
+            <dt className="text-neutral-600">ডেলিভারি</dt>
             <dd className="text-neutral-900">{formatPrice(shipping)}</dd>
           </div>
         </dl>
 
         <div className="mt-4 flex justify-between border-t border-neutral-200 pt-4 text-base font-semibold text-neutral-900">
-          <span>Total</span>
+          <span>মোট</span>
           <span>{formatPrice(total)}</span>
         </div>
 
@@ -292,10 +292,10 @@ export function CheckoutForm({
           disabled={pending || zones.length === 0}
           className="mt-6 h-12 w-full rounded-full bg-neutral-900 text-sm font-medium text-white transition-colors hover:bg-neutral-800 disabled:bg-neutral-300"
         >
-          {pending ? "Placing order…" : "Place order"}
+          {pending ? "অর্ডার হচ্ছে…" : "অর্ডার করুন"}
         </button>
         <p className="mt-3 text-center text-[11px] text-neutral-500">
-          By placing this order you agree to our delivery and returns policy.
+          অর্ডার দেওয়ার মাধ্যমে আপনি ডেলিভারি ও রিটার্ন নীতিতে সম্মত হচ্ছেন।
         </p>
       </aside>
     </form>

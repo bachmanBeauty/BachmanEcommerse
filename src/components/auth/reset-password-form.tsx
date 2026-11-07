@@ -18,33 +18,33 @@ export function ResetPasswordForm() {
       <FormMessage state={state} />
 
       <div>
-        <Label htmlFor="password">New password</Label>
+        <Label htmlFor="password">নতুন পাসওয়ার্ড</Label>
         <Input
           id="password"
           name="password"
           type="password"
           autoComplete="new-password"
-          placeholder="At least 8 characters"
+          placeholder="কমপক্ষে ৮ অক্ষর"
           minLength={8}
           required
         />
       </div>
 
       <div>
-        <Label htmlFor="confirmPassword">Confirm new password</Label>
+        <Label htmlFor="confirmPassword">নতুন পাসওয়ার্ড নিশ্চিত করুন</Label>
         <Input
           id="confirmPassword"
           name="confirmPassword"
           type="password"
           autoComplete="new-password"
-          placeholder="Repeat your password"
+          placeholder="আবার লিখুন"
           minLength={8}
           required
         />
       </div>
 
       <Button type="submit" className="w-full" disabled={pending}>
-        {pending ? "Updating…" : "Update password"}
+        {pending ? "আপডেট হচ্ছে…" : "পাসওয়ার্ড আপডেট করুন"}
       </Button>
     </form>
   );

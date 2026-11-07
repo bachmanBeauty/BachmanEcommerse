@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useStore } from "@/components/store/store-provider";
+import { categoryLabel } from "@/lib/category-labels";
 import { formatPrice } from "@/lib/format";
 import type { Product } from "@/types/catalog";
 
@@ -27,11 +28,9 @@ export function WishlistButton({
   return (
     <button
       type="button"
-      aria-label={active ? "Remove from wishlist" : "Save to wishlist"}
+      aria-label={active ? "উইশলিস্ট থেকে সরান" : "উইশলিস্টে যোগ করুন"}
       aria-pressed={active}
-      onClick={() =>
-        toggleWishlist({ productId, name, slug, price, imageUrl })
-      }
+      onClick={() => toggleWishlist({ productId, name, slug, price, imageUrl })}
       className={className}
     >
       <svg
@@ -91,7 +90,7 @@ export function ProductCard({ product }: { product: Product }) {
 
         {!inStock && (
           <span className="absolute left-3 top-3 rounded-full bg-neutral-900/80 px-2.5 py-1 text-[10px] font-medium uppercase tracking-wide text-white">
-            Sold out
+            স্টক শেষ
           </span>
         )}
       </div>
@@ -99,7 +98,7 @@ export function ProductCard({ product }: { product: Product }) {
       <div className="p-4">
         {product.categories && (
           <p className="text-[11px] uppercase tracking-wide text-neutral-400">
-            {product.categories.name}
+            {categoryLabel(product.categories.slug, product.categories.name)}
           </p>
         )}
         <Link

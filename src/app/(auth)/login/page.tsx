@@ -3,15 +3,15 @@ import { Suspense } from "react";
 import { LoginForm } from "@/components/auth/login-form";
 
 export const metadata: Metadata = {
-  title: "Sign in",
+  title: "সাইন ইন",
 };
 
 export default function LoginPage() {
   return (
     <>
-      <h1 className="text-2xl font-semibold tracking-tight">Welcome back</h1>
+      <h1 className="text-2xl font-semibold tracking-tight">ফিরে আসায় স্বাগতম</h1>
       <p className="mt-1 mb-6 text-sm text-neutral-600">
-        Sign in to track orders and manage your account.
+        অর্ডার ট্র্যাক করতে ও অ্যাকাউন্ট দেখতে সাইন ইন করুন।
       </p>
       <Suspense fallback={null}>
         <LoginForm />

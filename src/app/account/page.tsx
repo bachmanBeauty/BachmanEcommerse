@@ -7,10 +7,11 @@ import { Button } from "@/components/ui/button";
 import { ButtonLink } from "@/components/ui/button-link";
 import { getCurrentRole, requireUser } from "@/lib/auth";
 import { formatDate, formatPrice } from "@/lib/format";
+import { orderStatusLabel } from "@/lib/order-status";
 import { createClient } from "@/lib/supabase/server";
 
 export const metadata: Metadata = {
-  title: "My account",
+  title: "আমার অ্যাকাউন্ট",
 };
 
 type OrderRow = {
@@ -54,22 +55,22 @@ async function AccountContent() {
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="font-serif text-4xl tracking-tight text-neutral-900">
-            My account
+            আমার অ্যাকাউন্ট
           </h1>
           <p className="mt-1 text-sm text-neutral-600">{user.email}</p>
         </div>
         <div className="flex flex-wrap gap-2">
           <ButtonLink href="/wishlist" variant="outline" size="sm">
-            Wishlist
+            উইশলিস্ট
           </ButtonLink>
           {role === "admin" && (
             <ButtonLink href="/admin" variant="outline" size="sm">
-              Admin dashboard
+              অ্যাডমিন ড্যাশবোর্ড
             </ButtonLink>
           )}
           <form action={signOut}>
             <Button type="submit" variant="outline" size="sm">
-              Sign out
+              সাইন আউট
             </Button>
           </form>
         </div>
@@ -77,7 +78,7 @@ async function AccountContent() {
 
       <section className="mt-8 rounded-2xl border border-neutral-200 bg-white p-6">
         <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-          Profile
+          প্রোফাইল
         </h2>
         <ProfileForm
           defaultName={profile?.full_name ?? ""}
@@ -88,21 +89,21 @@ async function AccountContent() {
       <section className="mt-6 rounded-2xl border border-neutral-200 bg-white p-6">
         <div className="flex items-center justify-between gap-4">
           <h2 className="text-sm font-semibold uppercase tracking-wide text-neutral-500">
-            Recent orders
+            সাম্প্রতিক অর্ডার
           </h2>
           <Link
             href="/track"
             className="text-xs font-medium text-rose-600 hover:text-rose-700"
           >
-            Track an order
+            অর্ডার ট্র্যাক করুন
           </Link>
         </div>
 
         {orders.length === 0 ? (
           <p className="mt-4 text-sm text-neutral-600">
-            You have not placed an order yet.{" "}
+            আপনি এখনো কোনো অর্ডার করেননি।{" "}
             <Link href="/shop" className="text-rose-600 hover:text-rose-700">
-              Browse the shop
+              শপ দেখুন
             </Link>
           </p>
         ) : (
@@ -117,12 +118,12 @@ async function AccountContent() {
                     {order.order_number}
                   </p>
                   <p className="mt-0.5 text-xs text-neutral-500">
-                    {formatDate(order.created_at)} · {order.payment_method.toUpperCase()}
+                    {formatDate(order.created_at)}
                   </p>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium capitalize text-neutral-700">
-                    {order.status}
+                  <span className="rounded-full bg-neutral-100 px-3 py-1 text-xs font-medium text-neutral-700">
+                    {orderStatusLabel(order.status)}
                   </span>
                   <span className="text-sm font-semibold text-neutral-900">
                     {formatPrice(order.total)}

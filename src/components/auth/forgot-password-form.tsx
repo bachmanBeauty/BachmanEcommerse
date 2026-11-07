@@ -19,7 +19,7 @@ export function ForgotPasswordForm() {
       <FormMessage state={state} />
 
       <div>
-        <Label htmlFor="email">Email</Label>
+        <Label htmlFor="email">ইমেইল</Label>
         <Input
           id="email"
           name="email"
@@ -31,13 +31,13 @@ export function ForgotPasswordForm() {
       </div>
 
       <Button type="submit" className="w-full" disabled={pending}>
-        {pending ? "Sending…" : "Send reset link"}
+        {pending ? "পাঠানো হচ্ছে…" : "রিসেট লিংক পাঠান"}
       </Button>
 
       <p className="text-center text-sm text-neutral-600">
-        Remembered it?{" "}
+        মনে পড়েছে?{" "}
         <Link href="/login" className="font-medium text-rose-600 hover:text-rose-700">
-          Back to sign in
+          সাইন ইনে ফিরুন
         </Link>
       </p>
     </form>
