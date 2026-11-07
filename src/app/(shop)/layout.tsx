@@ -6,7 +6,7 @@ import { StoreProvider } from "@/components/store/store-provider";
 export default function ShopLayout({ children }: { children: ReactNode }) {
   return (
     <StoreProvider>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex min-h-screen flex-col bg-[#fbf8f4]">
         <SiteHeader />
         <main className="flex-1">{children}</main>
         <SiteFooter />
